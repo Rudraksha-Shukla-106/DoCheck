@@ -24,8 +24,9 @@
   --ease: cubic-bezier(0.2, 0, 0, 1);
   --t-fast: 150ms;
   --t-med: 300ms;
-  --grid-line: rgba(27, 79, 156, 0.055);
-  --scan-tint: rgba(27, 79, 156, 0.05);
+  --grid-line: rgba(27, 79, 156, 0.16);
+  --scan-tint: rgba(27, 79, 156, 0.12);
+  --motif: 0.75;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --space: 16px;
@@ -53,6 +54,7 @@
   --btn-fg: #ffffff;
   --grid-line: rgba(138, 180, 245, 0.06);
   --scan-tint: rgba(138, 180, 245, 0.07);
+  --motif: 0.45;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.45);
   color-scheme: dark;
@@ -285,6 +287,8 @@ button.formbtn.active { border-color: var(--authority); background: var(--author
   .mainnav { order: 3; flex-basis: 100%; margin-left: 0; }
   .mainnav a { padding: 10px 8px; }
   .sticky-action { position: sticky; bottom: 0; background: var(--paper); padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); }
+  body::before { background-size: 100% 150px, 76px 76px, 76px 76px; animation: none; }
+  .ambient-doc { width: 300px; right: -200px; top: 40px; opacity: calc(var(--motif) - 0.22); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -374,15 +378,32 @@ body::before {
 .ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .ambient-doc {
   position: absolute; right: -150px; top: 90px; width: 470px; max-width: none;
-  opacity: 0.45; transition: opacity 600ms var(--ease);
+  opacity: var(--motif); transition: opacity 600ms var(--ease);
   -webkit-mask-image: linear-gradient(to left, #000 35%, transparent 92%);
   mask-image: linear-gradient(to left, #000 35%, transparent 92%);
 }
-body[data-stage="category"] .ambient-doc { opacity: 0.52; }
-body[data-stage="form"] .ambient-doc { opacity: 0.6; }
+body[data-stage="category"] .ambient-doc { opacity: calc(var(--motif) + 0.07); }
+body[data-stage="form"] .ambient-doc { opacity: calc(var(--motif) + 0.13); }
 body[data-stage="file"] .ambient-doc,
-body[data-stage="result"] .ambient-doc { opacity: 0.7; }
-body[data-result="pass"] .ambient-doc { opacity: 0.8; }
+body[data-stage="result"] .ambient-doc { opacity: calc(var(--motif) + 0.2); }
+body[data-result="pass"] .ambient-doc { opacity: calc(var(--motif) + 0.25); }
+
+/* light-only presence: same system, perceptible on bright surfaces */
+html:not([data-theme="dark"]) .ambient-doc {
+  right: -70px;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 98%);
+  mask-image: linear-gradient(to left, #000 55%, transparent 98%);
+}
+html:not([data-theme="dark"]) .ambient-doc g:first-child { stroke-opacity: 1; }
+html:not([data-theme="dark"]) .ambient-doc g:last-child { fill-opacity: 1; }
+html:not([data-theme="dark"]) body::before { animation-duration: 11s; }
+html:not([data-theme="dark"]) .hero::before {
+  background: radial-gradient(520px 240px at 82% 18%, #d7e3f6, transparent 70%);
+}
+html:not([data-theme="dark"]) { background: linear-gradient(to bottom, #e2e7f1 0, var(--paper) 340px); }
+html:not([data-theme="dark"]) .source-card {
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, rgba(27, 79, 156, 0.05) 27px 28px);
+}
 
 /* hero richness */
 .hero { position: relative; }
