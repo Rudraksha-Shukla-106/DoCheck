@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import requirements from '../../data/requirements.json';
+
+const groups = [
+  { id: 'exam', label: 'Exams' },
+  { id: 'identity_document', label: 'Identity Documents' },
+  { id: 'bank_kyc', label: 'Bank & KYC' },
+];
+---
+<Base title="Requirements">
+  <p><a href="/">← Back to checker</a></p>
+  <h1>Requirements</h1>
+  <p class="lede">Every published requirement we check against, with its official source and verification date. Pick one to check your file.</p>
+  {groups.map((g) => (
+    <>
+      <p class="refgroup">{g.label}</p>
+      <ul class="reflist">
+        {requirements.filter((r) => r.category === g.id).map((r) => (
+          <li><a href={`/requirements/${r.slug}/`}><span>{r.form_name} — {r.document_type}</span><span class={`badge ${r.status}`}>{r.status === 'verified' ? 'verified' : r.status === 'known_discrepancy' ? 'see note' : 'needs recheck'}</span></a></li>
+        ))}
+      </ul>
+    </>
+  ))}
+</Base>

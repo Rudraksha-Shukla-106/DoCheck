@@ -1,0 +1,36 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Verify photo, signature and document files against published form requirements — then fix common issues in one click.' } = Astro.props;
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | DOCHECK</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={`${title} | DOCHECK`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b4f9c'/%3E%3Cpath d='M9 16.5l5 5 9-11' stroke='white' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="wrap">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

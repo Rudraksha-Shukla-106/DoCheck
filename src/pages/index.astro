@@ -1,0 +1,532 @@
+---
+import Base from '../layouts/Base.astro';
+import requirements from '../data/requirements.json';
+
+const categories = [
+  {
+    id: 'exam',
+    label: 'Exams',
+    hint: 'SSC · UPSC · IBPS · RRB · NTA',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9L12 4 2 9l10 5 10-5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v5"/></svg>',
+  },
+  {
+    id: 'identity_document',
+    label: 'Identity Documents',
+    hint: 'PAN · Voter ID · Passport · Aadhaar',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M5.5 16c.6-1.4 1.5-2 2.5-2s1.9.6 2.5 2"/><path d="M14 9h5M14 13h5"/></svg>',
+  },
+  {
+    id: 'bank_kyc',
+    label: 'Bank & KYC',
+    hint: 'Account opening · Mutual fund KYC',
+    icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-6 9 6"/><path d="M4 9v10M20 9v10M8 12v5M12 12v5M16 12v5"/><path d="M2 20h20"/></svg>',
+  },
+];
+---
+<Base title="Check your file before you upload it">
+  <section class="hero">
+    <h1>Check your file before you upload it.</h1>
+    <p class="lede">Verify photo, signature and document files against published form requirements — then fix common issues in one click.</p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#check" style="text-decoration:none;text-align:center;">Check a File</a>
+      <a href="/requirements/">Browse Requirements</a>
+    </div>
+    <p class="trustline">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:3px;"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+      Your file stays in your browser during the core check-and-fix process.
+    </p>
+  </section>
+
+  <section id="check" aria-label="File checker">
+    <p class="progressline" id="progressLine" aria-live="polite">Category — · Form — · File —</p>
+    <p class="stateline" id="appStatus">Starting… (if this never changes, JavaScript is blocked in your browser)</p>
+
+    <noscript>
+      <p class="verdict fail"><span class="v-title">❌ JavaScript is off</span><span class="v-sub">DOCHECK needs JavaScript turned on to read and fix your file, because everything runs in your browser. Turn it on and reload.</span></p>
+    </noscript>
+
+    <script type="application/json" id="requirements-data" set:html={JSON.stringify(requirements).replace(/</g, '\\u003c')}></script>
+
+    <ol class="steps">
+      <li class="step" id="step1">
+        <p class="step-title">Choose category</p>
+        <p class="step-sub">What is this file for?</p>
+        <div class="choices" role="group" aria-label="Choose category">
+          {categories.map((c) => (
+            <button type="button" class="choice" data-cat={c.id} aria-pressed="false">
+              <span set:html={c.icon} />
+              {c.label}<small>{c.hint}</small>
+            </button>
+          ))}
+        </div>
+      </li>
+      <li class="step" id="step2">
+        <p class="step-title">Choose the form you're applying for</p>
+        <p class="step-sub">Search, then pick one.</p>
+        <label for="formSearch">Search forms</label>
+        <input id="formSearch" type="search" placeholder="Type to filter — e.g. SSC, PAN, passport…" disabled autocomplete="off" />
+        <div class="formlist" id="formList">
+          <p class="hint" id="formHint">Choose a category above first.</p>
+        </div>
+        <p class="selected-line" id="selectedLine" aria-live="polite"></p>
+      </li>
+      <li class="step" id="step3">
+        <p class="step-title">Upload your file</p>
+        <p class="step-sub">JPG, JPEG or PNG photo/signature. PDF shows size info only.</p>
+        <label class="dropzone" id="dropzone" for="file">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+          <span class="dz-title">Drop your file here, or choose from your device</span>
+          <span class="dz-sub">Works with camera photos and gallery images on mobile.</span>
+          <input id="file" type="file" accept="image/*,.pdf" disabled />
+        </label>
+        <p class="hint" id="fileHint">Choose a category and form above to enable upload.</p>
+        <div class="filecard" id="fileCard" hidden>
+          <img id="fileThumb" alt="" />
+          <div class="fmeta">
+            <div class="fname" id="fileName"></div>
+            <div class="num" id="fileMeta"></div>
+          </div>
+          <button type="button" class="linkbtn" id="removeFile">Remove</button>
+        </div>
+      </li>
+      <li class="step" id="step4">
+        <p class="step-title">Check, fix &amp; download</p>
+        <p class="hint" id="resultsEmpty">Your check result will appear here after you upload a file.</p>
+        <span id="verdict" class="verdict" hidden aria-live="polite"></span>
+        <div class="report" id="ledger" hidden>
+          <div class="report-head" aria-hidden="true"><span>Your file</span><span>Requirement</span><span>Status</span></div>
+          <div id="ledgerBody"></div>
+        </div>
+        <div class="fixbox" id="fixBox" hidden>
+          <p><strong>Fix automatically.</strong> Resize, compress or convert this file to meet the selected requirements.</p>
+          <div class="btn-row sticky-action">
+            <button type="button" class="btn-primary" id="fixBtn" disabled>Fix automatically</button>
+          </div>
+        </div>
+        <div class="ba-grid" id="beforeAfter" hidden>
+          <figure class="ba-card">
+            <figcaption>Before</figcaption>
+            <img id="beforeImg" alt="Your uploaded file" />
+            <dl id="beforeMeta">
+              <dt>Size</dt><dd id="bSize">—</dd>
+              <dt>Dimensions</dt><dd id="bDims">—</dd>
+              <dt>Format</dt><dd id="bFormat">—</dd>
+            </dl>
+          </figure>
+          <div class="ba-arrow" aria-hidden="true">→</div>
+          <figure class="ba-card fixed">
+            <figcaption>Fixed file</figcaption>
+            <img id="afterImg" alt="Corrected file preview" />
+            <dl id="afterMeta">
+              <dt>Size</dt><dd id="aSize">—</dd>
+              <dt>Dimensions</dt><dd id="aDims">—</dd>
+              <dt>Format</dt><dd id="aFormat">—</dd>
+            </dl>
+          </figure>
+        </div>
+        <div class="btn-row" id="downloadRow" hidden>
+          <button type="button" class="btn-primary" id="downloadBtn" disabled>Download File</button>
+          <button type="button" class="btn-ghost" id="checkAnotherBtn">Check Another File</button>
+          <p class="hint" id="downloadNote"></p>
+        </div>
+        <div id="trust"></div>
+        <p class="fineprint" id="accuracyNote"></p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-label="Browse requirements">
+    <h2>Browse requirements</h2>
+    <ul class="reflist">
+      {requirements.map((r) => (
+        <li><a href={`/requirements/${r.slug}/`}><span>{r.form_name} — {r.document_type}</span><span class={`badge ${r.status}`}>{r.status === 'verified' ? 'verified' : r.status === 'known_discrepancy' ? 'see note' : 'needs recheck'}</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+  <script>
+    import { readFileProps, checkAgainstRequirement, fixImage } from '../lib/engine.ts';
+
+    const requirements = JSON.parse(document.getElementById('requirements-data').textContent);
+
+    const catBtns = Array.from(document.querySelectorAll('[data-cat]'));
+    const formSearch = document.getElementById('formSearch');
+    const formList = document.getElementById('formList');
+    const selectedLine = document.getElementById('selectedLine');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file');
+    const fileHint = document.getElementById('fileHint');
+    const fileCard = document.getElementById('fileCard');
+    const fileThumb = document.getElementById('fileThumb');
+    const fileName = document.getElementById('fileName');
+    const fileMeta = document.getElementById('fileMeta');
+    const removeFile = document.getElementById('removeFile');
+    const verdict = document.getElementById('verdict');
+    const trust = document.getElementById('trust');
+    const ledger = document.getElementById('ledger');
+    const ledgerBody = document.getElementById('ledgerBody');
+    const resultsEmpty = document.getElementById('resultsEmpty');
+    const fixBox = document.getElementById('fixBox');
+    const fixBtn = document.getElementById('fixBtn');
+    const downloadRow = document.getElementById('downloadRow');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const checkAnotherBtn = document.getElementById('checkAnotherBtn');
+    const downloadNote = document.getElementById('downloadNote');
+    const beforeAfter = document.getElementById('beforeAfter');
+    const beforeImg = document.getElementById('beforeImg');
+    const afterImg = document.getElementById('afterImg');
+    const accuracyNote = document.getElementById('accuracyNote');
+    const progressLine = document.getElementById('progressLine');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+
+    let activeCat = '';
+    let currentReq = null;
+    let currentFile = null;
+    let fixedBlob = null;
+    let fixedUrl = null;
+    let thumbUrl = null;
+
+    document.getElementById('appStatus').textContent = '✓ Ready — choose a category above to begin.';
+
+    function statusLabel(r) {
+      if (r.status === 'verified') return 'verified';
+      if (r.status === 'known_discrepancy') return 'see note';
+      return 'needs recheck';
+    }
+
+    function updateProgress() {
+      const tick = (v) => (v ? '✓' : '—');
+      progressLine.textContent =
+        `Category ${tick(activeCat)} · Form ${tick(currentReq)} · File ${tick(currentFile)}`;
+      step1.classList.toggle('done', !!activeCat);
+      step2.classList.toggle('done', !!currentReq);
+      step3.classList.toggle('done', !!currentFile);
+    }
+
+    function renderFormList(q) {
+      const query = (q || '').toLowerCase();
+      const list = requirements.filter(
+        (r) => r.category === activeCat && (!query || `${r.form_name} ${r.document_type}`.toLowerCase().includes(query)),
+      );
+      formList.innerHTML = '';
+      if (!list.length) {
+        const p = document.createElement('p');
+        p.className = 'hint';
+        p.textContent = 'No match. Try a different search.';
+        formList.appendChild(p);
+        return;
+      }
+      list.forEach((r) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'formbtn' + (currentReq && currentReq.id === r.id ? ' active' : '');
+        b.dataset.id = r.id;
+        const wrap = document.createElement('span');
+        const name = document.createElement('span');
+        name.className = 'fname';
+        name.textContent = r.form_name;
+        const meta = document.createElement('span');
+        meta.className = 'fmeta';
+        meta.textContent = `${r.document_type} · ${r.category === 'exam' ? 'Exam' : r.category === 'identity_document' ? 'Identity document' : 'Bank & KYC'}`;
+        wrap.append(name, meta);
+        const badge = document.createElement('span');
+        badge.className = `badge ${r.status}`;
+        badge.textContent = statusLabel(r);
+        b.append(wrap, badge);
+        b.addEventListener('click', () => selectForm(r.id));
+        formList.appendChild(b);
+      });
+    }
+
+    function resetResults() {
+      verdict.hidden = true;
+      ledger.hidden = true;
+      fixBox.hidden = true;
+      downloadRow.hidden = true;
+      beforeAfter.hidden = true;
+      resultsEmpty.hidden = false;
+      accuracyNote.textContent = '';
+      downloadNote.textContent = '';
+      fixedBlob = null;
+      if (fixedUrl) { URL.revokeObjectURL(fixedUrl); fixedUrl = null; }
+    }
+
+    function renderTrust() {
+      trust.innerHTML = '';
+      if (!currentReq) return;
+      const card = document.createElement('div');
+      const needsRecheck = currentReq.status === 'needs_recheck';
+      card.className = 'source-card' + (needsRecheck ? ' recheck' : '');
+      const label = document.createElement('div');
+      label.className = 's-label';
+      label.textContent = needsRecheck ? 'UNVERIFIED — NEEDS RECHECK' : 'OFFICIAL SOURCE — VERIFIED REQUIREMENT';
+      const dl = document.createElement('dl');
+      const add = (term, text) => {
+        const dt = document.createElement('dt');
+        dt.textContent = term;
+        const dd = document.createElement('dd');
+        dd.textContent = text;
+        dl.append(dt, dd);
+      };
+      add('Source', currentReq.official_source);
+      add('Last verified', currentReq.verified_date ?? 'Not yet verified — marked needs recheck');
+      if (currentReq.source_url) {
+        const dt = document.createElement('dt');
+        dt.textContent = 'Official page';
+        const dd = document.createElement('dd');
+        const a = document.createElement('a');
+        a.href = currentReq.source_url;
+        a.rel = 'noopener';
+        a.textContent = 'View official source →';
+        dd.appendChild(a);
+        dl.append(dt, dd);
+      }
+      if (needsRecheck) add('Note', 'This record is not yet verified against a current official source. Use the live portal as the authority.');
+      card.append(label, dl);
+      trust.appendChild(card);
+      if (currentReq.status === 'known_discrepancy') {
+        const d = document.createElement('div');
+        d.className = 'discrepancy';
+        const l = document.createElement('div');
+        l.className = 's-label';
+        l.textContent = '⚠ SOURCE DISCREPANCY';
+        const p1 = document.createElement('p');
+        p1.textContent = 'Two official references list different values for this requirement.';
+        const p2 = document.createElement('p');
+        p2.textContent = currentReq.discrepancy_note;
+        const p3 = document.createElement('p');
+        p3.innerHTML = '';
+        p3.textContent = 'Recommendation: follow the requirement shown on the live application portal when available.';
+        d.append(l, p1, p2, p3);
+        trust.appendChild(d);
+      }
+    }
+
+    function clearFile(message) {
+      fileInput.value = '';
+      currentFile = null;
+      if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = null; }
+      fileCard.hidden = true;
+      fileHint.textContent = message || 'Ready — choose your photo, signature, or document file.';
+      updateProgress();
+    }
+
+    function selectForm(id, opts) {
+      currentReq = requirements.find((r) => r.id === id) || null;
+      formList.querySelectorAll('[data-id]').forEach((x) => x.classList.toggle('active', x.dataset.id === id));
+      if (!currentReq) return;
+      selectedLine.textContent = `Selected: ${currentReq.form_name} — ${currentReq.document_type}`;
+      fileInput.disabled = false;
+      fileHint.textContent = 'Ready — choose your photo, signature, or document file.';
+      resetResults();
+      renderTrust();
+      updateProgress();
+      if (!opts || !opts.keepFile) clearFile();
+      else if (currentFile) handleFile();
+    }
+
+    catBtns.forEach((b) => {
+      b.addEventListener('click', () => {
+        activeCat = b.dataset.cat;
+        catBtns.forEach((x) => {
+          const on = x === b;
+          x.classList.toggle('active', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        currentReq = null;
+        selectedLine.textContent = '';
+        fileInput.disabled = true;
+        formSearch.disabled = false;
+        formSearch.value = '';
+        resetResults();
+        renderTrust();
+        clearFile('Now choose a specific form below to enable upload.');
+        fileInput.disabled = true;
+        renderFormList('');
+        updateProgress();
+        formSearch.focus();
+      });
+    });
+
+    formSearch.addEventListener('input', () => renderFormList(formSearch.value));
+
+    function showFileCard(f, dimsText) {
+      if (thumbUrl) URL.revokeObjectURL(thumbUrl);
+      fileCard.hidden = false;
+      if (f.type.startsWith('image/')) {
+        thumbUrl = URL.createObjectURL(f);
+        fileThumb.src = thumbUrl;
+        fileThumb.alt = `Preview of ${f.name}`;
+      } else {
+        thumbUrl = null;
+        fileThumb.removeAttribute('src');
+        fileThumb.alt = 'No preview for this file type';
+      }
+      fileName.textContent = f.name;
+      fileMeta.textContent = `${(f.size / 1024).toFixed(1)} KB · ${(f.name.split('.').pop() || '').toUpperCase()}${dimsText ? ` · ${dimsText}` : ''}`;
+    }
+
+    removeFile.addEventListener('click', () => {
+      clearFile();
+      resetResults();
+      renderTrust();
+      fileInput.focus();
+    });
+
+    function paintVerdict(pass, title, sub) {
+      verdict.hidden = false;
+      verdict.className = 'verdict ' + (pass ? 'pass' : 'fail');
+      verdict.innerHTML = '';
+      const t = document.createElement('p');
+      t.className = 'v-title';
+      t.textContent = title;
+      const s = document.createElement('p');
+      s.className = 'v-sub';
+      s.textContent = sub;
+      verdict.append(t, s);
+    }
+
+    function paintRows(rows) {
+      ledger.hidden = false;
+      resultsEmpty.hidden = true;
+      ledgerBody.innerHTML = '';
+      rows.forEach((r) => {
+        const kind = r.pass == null ? 'info' : r.pass ? 'pass' : 'fail';
+        const row = document.createElement('div');
+        row.className = `report-row ${kind}`;
+        const vals = document.createElement('div');
+        vals.className = 'vals';
+        const prop = document.createElement('span');
+        prop.className = 'prop';
+        prop.textContent = r.label.toUpperCase();
+        const actual = document.createElement('div');
+        actual.className = 'actual num';
+        actual.textContent = r.actual;
+        const req = document.createElement('div');
+        req.className = 'req';
+        req.textContent = r.expected;
+        vals.append(prop, actual, req);
+        const pill = document.createElement('span');
+        pill.className = `pill ${kind}`;
+        pill.textContent = kind === 'pass' ? '✓ PASS' : kind === 'fail' ? '✗ FAIL' : '• INFO';
+        row.append(vals, pill);
+        ledgerBody.appendChild(row);
+      });
+    }
+
+    async function handleFile() {
+      const f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      if (!currentReq) {
+        paintVerdict(false, '❌ Choose a form first', 'Pick your form in step 2, then upload again.');
+        return;
+      }
+      currentFile = f;
+      updateProgress();
+      if (fixedUrl) { URL.revokeObjectURL(fixedUrl); fixedUrl = null; }
+      fixedBlob = null;
+      downloadRow.hidden = true;
+      beforeAfter.hidden = true;
+      beforeImg.src = URL.createObjectURL(f);
+      showFileCard(f);
+      let props;
+      try {
+        props = await readFileProps(f);
+      } catch (e) {
+        paintVerdict(false, '❌ Could not read that file', `${e.message} Upload a JPG, JPEG or PNG image.`);
+        return;
+      }
+      showFileCard(f, props.format === 'PDF' ? 'PDF document' : `${props.width} × ${props.height} px`);
+      document.getElementById('bSize').textContent = `${props.sizeKB.toFixed(1)} KB`;
+      document.getElementById('bDims').textContent = props.format === 'PDF' ? '—' : `${props.width} × ${props.height} px`;
+      document.getElementById('bFormat').textContent = props.format;
+      const rows = checkAgainstRequirement(props, currentReq);
+      const fails = rows.filter((r) => r.pass === false);
+      paintRows(rows);
+      if (fails.length === 0) {
+        paintVerdict(true, '✅ READY TO UPLOAD', `Your file meets the published requirements for ${currentReq.form_name}.`);
+        fixBox.hidden = true;
+      } else {
+        paintVerdict(false, `⚠ ${fails.length} ISSUE${fails.length > 1 ? 'S' : ''} TO FIX`, 'Each failed row shows your file against the requirement.');
+        const isPdf = f.type === 'application/pdf' || /pdf$/i.test(f.name);
+        fixBox.hidden = false;
+        fixBtn.disabled = isPdf;
+        if (isPdf) {
+          paintVerdict(false, `⚠ ${fails.length} ISSUE${fails.length > 1 ? 'S' : ''} TO FIX`, 'Automatic fix is not available for PDF files yet — convert to JPG first.');
+        }
+      }
+      accuracyNote.textContent = `Meets the published requirements we verified as of ${currentReq.verified_date ?? 'an unverified date'}. The live portal is the final authority.`;
+    }
+
+    fileInput.addEventListener('change', handleFile);
+
+    ['dragover', 'dragenter'].forEach((evt) => dropzone.addEventListener(evt, (e) => {
+      if (fileInput.disabled) return;
+      e.preventDefault();
+      dropzone.classList.add('dz-active');
+    }));
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dz-active'));
+    dropzone.addEventListener('drop', (e) => {
+      dropzone.classList.remove('dz-active');
+      if (fileInput.disabled || !e.dataTransfer || !e.dataTransfer.files.length) return;
+      e.preventDefault();
+      fileInput.files = e.dataTransfer.files;
+      handleFile();
+    });
+
+    fixBtn.addEventListener('click', async () => {
+      if (!currentFile || !currentReq) return;
+      fixBtn.disabled = true;
+      fixBtn.textContent = 'Fixing…';
+      try {
+        fixedBlob = await fixImage(currentFile, currentReq, (url) => { afterImg.src = url; });
+        if (fixedUrl) URL.revokeObjectURL(fixedUrl);
+        fixedUrl = URL.createObjectURL(fixedBlob);
+        afterImg.src = fixedUrl;
+        beforeAfter.hidden = false;
+        const props = await readFileProps(new File([fixedBlob], 'fixed.jpg', { type: fixedBlob.type }));
+        document.getElementById('aSize').textContent = `${(fixedBlob.size / 1024).toFixed(1)} KB`;
+        document.getElementById('aDims').textContent = `${props.width} × ${props.height} px`;
+        document.getElementById('aFormat').textContent = props.format;
+        const rows = checkAgainstRequirement(props, currentReq);
+        const fails = rows.filter((r) => r.pass === false);
+        paintRows(rows);
+        if (fails.length === 0) {
+          paintVerdict(true, '✅ READY TO UPLOAD', `Fixed file is ${(fixedBlob.size / 1024).toFixed(1)} KB, corrected format and size.`);
+        } else {
+          paintVerdict(false, `⚠ ${fails.length} ISSUE${fails.length > 1 ? 'S' : ''} REMAIN${fails.length > 1 ? '' : 'S'}`, 'The fixed file still differs on the rows marked FAIL — compare before and after below.');
+        }
+        downloadRow.hidden = false;
+        downloadBtn.disabled = false;
+        downloadNote.textContent = '';
+      } catch (e) {
+        paintVerdict(false, '❌ Fix failed', `${e.message} Try a different file, or a smaller photo.`);
+      } finally {
+        fixBtn.disabled = false;
+        fixBtn.textContent = 'Fix automatically';
+      }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      if (!fixedBlob || !currentReq) return;
+      const a = document.createElement('a');
+      a.href = fixedUrl;
+      a.download = `docheck-fixed-${currentReq.id}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      downloadNote.textContent = '✓ Download started — check your downloads folder.';
+    });
+
+    checkAnotherBtn.addEventListener('click', () => {
+      clearFile();
+      resetResults();
+      renderTrust();
+      updateProgress();
+      fileInput.disabled = false;
+      fileInput.focus();
+    });
+  </script>
+</Base>

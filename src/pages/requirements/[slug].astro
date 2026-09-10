@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import requirements from '../../data/requirements.json';
+
+export async function getStaticPaths() {
+  return requirements.map((r) => ({ params: { slug: r.slug }, props: { req: r } }));
+}
+
+const { req } = Astro.props;
+const badge = req.status === 'verified' ? 'verified' : req.status === 'known_discrepancy' ? 'see note' : 'needs recheck';
+---
+<Base title={`${req.form_name} ${req.document_type} size`} description={`Sourced ${req.form_name} ${req.document_type} requirements with verification date. Check and fix your file in the browser.`}>
+  <p><a href="/requirements/">← All requirements</a></p>
+  <h1>{req.form_name} — {req.document_type}: size, dimensions, format</h1>
+  <p><span class={`badge ${req.status}`}>{badge}</span></p>
+
+  <div class="report" role="table" aria-label={`${req.form_name} ${req.document_type} requirements`}>
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      {req.min_kb != null && <div class="report-row info"><div class="vals"><span class="prop">MINIMUM SIZE</span><div class="actual num">{req.min_kb} KB</div></div><span></span></div>}
+      {req.max_kb != null && <div class="report-row info"><div class="vals"><span class="prop">MAXIMUM SIZE</span><div class="actual num">{req.max_kb} KB</div></div><span></span></div>}
+      {req.width != null && <div class="report-row info"><div class="vals"><span class="prop">DIMENSIONS</span><div class="actual num">{req.width} × {req.height} {req.unit}</div></div><span></span></div>}
+      {req.format?.length > 0 && <div class="report-row info"><div class="vals"><span class="prop">FORMAT</span><div class="actual num">{req.format.join(' / ')}</div></div><span></span></div>}
+      {req.background_rule && <div class="report-row info"><div class="vals"><span class="prop">BACKGROUND</span><div class="actual">{req.background_rule}</div></div><span></span></div>}
+      {req.special_rules && <div class="report-row info"><div class="vals"><span class="prop">SPECIAL RULES</span><div class="actual">{req.special_rules}</div></div><span></span></div>}
+    </div>
+  </div>
+
+  <div class={`source-card${req.status === 'needs_recheck' ? ' recheck' : ''}`}>
+    <div class="s-label">{req.status === 'needs_recheck' ? 'UNVERIFIED — NEEDS RECHECK' : 'OFFICIAL SOURCE — VERIFIED REQUIREMENT'}</div>
+    <dl>
+      <dt>Source</dt><dd>{req.official_source}</dd>
+      <dt>Last verified</dt><dd>{req.verified_date ?? 'Not yet verified — marked needs recheck'}</dd>
+      {req.status === 'needs_recheck' && <><dt>Note</dt><dd>This record is not yet verified against a current official source. Use the live portal as the authority.</dd></>}
+    </dl>
+  </div>
+
+  {req.status === 'known_discrepancy' && (
+    <div class="discrepancy">
+      <div class="s-label">⚠ SOURCE DISCREPANCY</div>
+      <p>Two official references list different values for this requirement.</p>
+      <p>{req.discrepancy_note}</p>
+      <p>Recommendation: follow the requirement shown on the live application portal when available.</p>
+    </div>
+  )}
+
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Check my file now</a></p>
+  <p class="fineprint">Meets the published requirements we verified as of {req.verified_date ?? 'an unverified date'}. The live portal is the final authority — never a guarantee of acceptance.</p>
+</Base>
