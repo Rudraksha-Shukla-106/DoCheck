@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Privacy — Files Stay in Your Browser | DocCheck" description="DocCheck processes your photo and signature files inside your browser. Nothing is uploaded to a server during the check-and-fix process. No accounts, no sign-up." canonical="https://doccheck.example/privacy/">
+<Base title="Privacy — Files Stay in Your Browser | DocCheck" description="DocCheck processes your photo and signature files inside your browser. Nothing is uploaded to a server during the check-and-fix process. No accounts, no sign-up." canonical="https://doccheck.example/privacy-policy/">
+  <meta http-equiv="refresh" content="0; url=/privacy-policy/" />
   <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Privacy</nav>
   <div class="prose">
     <h1>Privacy</h1>
     <p><strong>Your files never leave your device during the core check-and-fix process.</strong> Reading, comparing, resizing, compressing and converting all happen in your browser with client-side code.</p>
     <p>There are no accounts and no sign-up, so there is nothing to tie a file to you. We run no advertising inside the core workflow and make no AI or API calls with your files.</p>
     <p>The only network requests are the ones your browser normally makes: loading the page itself and the fonts it uses.</p>
+    <p>We have published a full <a href="/privacy-policy/">Privacy Policy</a>. You will be redirected there shortly — <a href="/privacy-policy/">continue to Privacy Policy →</a></p>
   </div>
+  <script>window.location.replace('/privacy-policy/');</script>
 </Base>

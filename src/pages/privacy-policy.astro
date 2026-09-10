@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Privacy Policy | DocCheck" description="DocCheck Privacy Policy — your photo and signature files are processed inside your browser and never uploaded to a server. No accounts, no sign-up, no tracking of your files." canonical="https://doccheck.example/privacy-policy/">
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Privacy Policy</nav>
+  <div class="prose">
+    <h1>Privacy Policy</h1>
+    <p class="fineprint">Last updated: 10 September 2026</p>
+    <p>DocCheck is a free, client-side photo and signature resizer for government exams and ID applications. This policy explains what happens to your data when you use it.</p>
+
+    <h2>The short version</h2>
+    <ul>
+      <li><strong>Your files never leave your device</strong> during the core check-and-fix process. Reading, comparing, resizing, compressing and converting all happen in your browser.</li>
+      <li><strong>No accounts, no sign-up.</strong> There is nothing to tie a file to you.</li>
+      <li><strong>No advertising inside the core workflow</strong> and no AI or API calls with your files.</li>
+      <li>The only network requests are the ones your browser normally makes: loading the page itself and the fonts it uses.</li>
+    </ul>
+
+    <h2>1. Files you upload</h2>
+    <p>When you choose a file in the checker, it is read locally with browser APIs (FileReader, Canvas) to measure size, dimensions and format. If you click <strong>Fix automatically</strong>, the corrected image is also generated locally. At no point in this flow is your photo, signature or document sent to a DocCheck server, because there is no upload server — the site is a static page.</p>
+    <p>Your original and fixed files exist only in your browser's memory until you download the fixed file or close the tab. Clearing the tab or using “Check Another File” discards them.</p>
+
+    <h2>2. Information we do not collect</h2>
+    <ul>
+      <li>We do not ask for your name, email, phone number or address to use the tool.</li>
+      <li>We do not store, view or transmit your uploaded files.</li>
+      <li>We do not build advertising profiles from your usage.</li>
+    </ul>
+
+    <h2>3. Information stored on your device</h2>
+    <p>DocCheck stores only your colour-theme preference (<code>docheck-theme</code> / <code>docheck-theme</code>) in <code>localStorage</code> so the site remembers light, dark or system mode. No personal data is kept there. You can clear it at any time from your browser settings; the site keeps working.</p>
+
+    <h2>4. Third-party requests</h2>
+    <p>The site loads fonts from Google Fonts (<code>fonts.googleapis.com</code> / <code>fonts.gstatic.com</code>). When your browser fetches them, Google receives standard request data such as your IP address and user agent, governed by Google's own privacy policy. We make no other third-party calls with your files.</p>
+    <p>If the site is hosted behind a CDN or static host, that host may keep standard server logs (IP address, requested URL, timestamp) to operate reliably. We do not combine those logs with file contents, because file contents never reach a server.</p>
+
+    <h2>5. Cookies</h2>
+    <p>DocCheck does not set its own tracking or advertising cookies. The theme preference above uses <code>localStorage</code>, not cookies.</p>
+
+    <h2>6. Contacting us</h2>
+    <p>If you email us via the <a href="/contact-us/">Contact Us</a> page, we receive whatever you choose to send (for example your name, email address and message) solely to reply to you. Please do not attach identity documents, photos or signatures to support emails — describe the issue in words instead.</p>
+
+    <h2>7. Children's privacy</h2>
+    <p>DocCheck is a general-purpose utility with no accounts and no user content collection. It is suitable for all ages, but minors should use it with a parent or guardian's guidance when preparing exam applications.</p>
+
+    <h2>8. Changes to this policy</h2>
+    <p>If this policy changes, the “Last updated” date above will be revised. Continued use of the site after a change means you accept the updated policy.</p>
+
+    <h2>9. Questions</h2>
+    <p>Questions about this policy? Reach us through the <a href="/contact-us/">Contact Us</a> page.</p>
+
+    <p>Related: <a href="/terms-and-conditions/">Terms &amp; Conditions</a> · <a href="/about-us/">About Us</a> · <a href="/how-it-works/">How It Works</a></p>
+  </div>
+</Base>

@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contact Us | DocCheck" description="Contact DocCheck — report a changed exam requirement, a bug, or ask a question about the photo and signature resizer. We reply by email; please don't attach identity documents." canonical="https://doccheck.example/contact-us/">
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Contact Us</nav>
+  <div class="prose">
+    <h1>Contact Us</h1>
+    <p>Questions about the photo and signature resizer? Found a requirement that changed (SSC, UPSC, IBPS, RRB, passport…)? Something not working? Send us a message — <strong>we usually reply within 2–3 working days</strong>.</p>
+
+    <h2>Before you write</h2>
+    <ul>
+      <li><strong>Don't attach identity documents.</strong> Describe the issue in words (form name, what you uploaded, what the checker said). Never email us your photo, signature, Aadhaar, PAN or passport scans.</li>
+      <li><strong>Check the live portal first</strong> for time-critical submissions — it is the final authority on what it accepts.</li>
+      <li>Quick answers: <a href="/how-it-works/">How It Works</a> · <a href="/requirements/">Requirements</a> · <a href="/privacy-policy/">Privacy Policy</a> · <a href="/terms-and-conditions/">Terms &amp; Conditions</a> · <a href="/about-us/">About Us</a></li>
+    </ul>
+
+    <h2>Send a message</h2>
+    <p class="fineprint">This form opens your email app with your message addressed to us — nothing is uploaded or stored by this site. Prefer your own app? Email us directly at <a href="mailto:support@doccheck.example">support@doccheck.example</a>.</p>
+    <form id="contactForm" class="contact-form" style="display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:var(--shadow-sm);">
+      <label for="cName">Your name
+        <input id="cName" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Sharma" required style="width:100%;padding:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:6px;font:inherit;" />
+      </label>
+      <label for="cEmail">Your email
+        <input id="cEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required style="width:100%;padding:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:6px;font:inherit;" />
+      </label>
+      <label for="cTopic">Topic
+        <select id="cTopic" name="topic" style="width:100%;padding:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:6px;font:inherit;">
+          <option>Requirement update (limits changed)</option>
+          <option>Bug report (checker / fix / download)</option>
+          <option>Question about using the tool</option>
+          <option>Privacy or terms question</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label for="cMsg">Message
+        <textarea id="cMsg" name="message" rows="6" required placeholder="Form name + notification year, what you tried, what happened…" style="width:100%;padding:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:6px;font:inherit;resize:vertical;"></textarea>
+      </label>
+      <p class="hint">Please include the exact form name (e.g. “SSC CGL 2026 — Photo”) and, for bugs, your browser and device. Do not paste personal ID numbers.</p>
+      <div class="btn-row" style="grid-template-columns:1fr 1fr;">
+        <button type="submit" class="btn-primary">Open Email App</button>
+        <button type="reset" class="btn-ghost">Clear</button>
+      </div>
+      <p class="fineprint" id="contactNote" aria-live="polite"></p>
+    </form>
+
+    <h2>Other details</h2>
+    <dl class="source-card" style="display:grid;">
+      <div><dt>Email</dt> <dd><a href="mailto:support@doccheck.example">support@doccheck.example</a></dd></div>
+      <div><dt>Response time</dt> <dd>2–3 working days in most cases</dd></div>
+      <div><dt>Support hours</dt> <dd>Monday–Friday, 10:00–18:00 IST</dd></div>
+    </dl>
+  </div>
+  <script>
+    const form = document.getElementById('contactForm');
+    const note = document.getElementById('contactNote');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('cName').value.trim();
+      const email = document.getElementById('cEmail').value.trim();
+      const topic = document.getElementById('cTopic').value;
+      const message = document.getElementById('cMsg').value.trim();
+      const subject = encodeURIComponent(`[DocCheck] ${topic} — ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`);
+      window.location.href = `mailto:support@doccheck.example?subject=${subject}&body=${body}`;
+      note.textContent = '✓ Your email app should open now with the message pre-filled. Just press Send there.';
+    });
+  </script>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About Us | DocCheck" description="About DocCheck — a free, privacy-first photo and signature resizer and checker for SSC, UPSC, IBPS, RRB, passport and other government forms. Files stay in your browser." canonical="https://doccheck.example/about-us/">
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / About Us</nav>
+  <div class="prose">
+    <h1>About Us</h1>
+    <p><strong>DocCheck is a free photo and signature resizer and checker for government exams and ID applications.</strong> Select your exact form, upload your photo or signature, and the tool checks file size, dimensions, format and aspect ratio against that form's published requirements — then automatically fixes supported issues, verifies the corrected file again, and lets you download it. Everything runs in your browser.</p>
+
+    <h2>Why DocCheck exists</h2>
+    <p>Government portals reject uploads that fall even slightly outside the published limits — a 60 KB photo where 20–50 KB is required, a PNG where only JPG is accepted, a rectangle where a square is required. Applicants usually discover this after a failed submission. DocCheck exists so you can <strong>check before you upload</strong>: see your file's values side by side with the required values, fix them in one click, and verify the fix before visiting the portal.</p>
+
+    <h2>What makes it different</h2>
+    <ul>
+      <li><strong>Privacy-first by architecture.</strong> There is no upload server. Reading, resizing, compressing and converting happen with client-side code, so your documents never leave your device during the core flow. See our <a href="/privacy-policy/">Privacy Policy</a>.</li>
+      <li><strong>Form-specific, not generic.</strong> A generic “compress to 50 KB” button doesn't know that SSC CGL wants 100 × 100 px while an Indian Passport photo wants 51 × 51 mm. DocCheck checks against the selected form's own limits, with the official source and verification date shown alongside.</li>
+      <li><strong>Honest about uncertainty.</strong> Where official sources disagree we show the conflict instead of silently picking one number, and every result says “meets the published requirements we verified as of [date]”. The live portal is always the final authority.</li>
+      <li><strong>No accounts, no paywall for the core tool.</strong> No sign-up, no watermarks on the fixed file.</li>
+    </ul>
+
+    <h2>How the tool works</h2>
+    <ol>
+      <li><strong>Choose your category and form</strong> — Exams, Identity Documents, or Bank &amp; KYC, then the exact form such as SSC CGL, IBPS PO or Indian Passport.</li>
+      <li><strong>Upload your file.</strong> It is read inside your browser: KB size, pixel dimensions and format.</li>
+      <li><strong>Read the verdict.</strong> A row-by-row report shows your file against each published requirement.</li>
+      <li><strong>Fix in one click.</strong> Resize, compress or convert to meet the selected requirements, compare before and after, then download.</li>
+    </ol>
+    <p>Learn more on the <a href="/how-it-works/">How It Works</a> page or browse every limit on the <a href="/requirements/">Requirements</a> page.</p>
+
+    <h2>Who it is for</h2>
+    <p>Applicants for SSC, UPSC, IBPS, RRB and other exams, plus anyone preparing passport, PAN, Voter ID, Aadhaar or bank-KYC uploads — and the cyber-café operators and family members who help them. If a phone camera gave you a 3 MB photo and the form wants 20–50 KB, this tool is for you.</p>
+
+    <h2>What we don't do</h2>
+    <ul>
+      <li>We don't guarantee a portal will accept your file — only the live application portal can decide that.</li>
+      <li>We don't fix wrong backgrounds, face position or unreadable scans automatically — those need a retake.</li>
+      <li>We don't store your files or ask you to email us identity documents.</li>
+    </ul>
+
+    <h2>Get in touch</h2>
+    <p>Found a requirement that changed, or something that isn't working? Tell us through the <a href="/contact-us/">Contact Us</a> page — describe the form and the issue in words, without attaching personal documents.</p>
+
+    <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Check a File</a></p>
+  </div>
+</Base>

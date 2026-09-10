@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Page Not Found (404) | DocCheck"
+  description="This DocCheck page doesn't exist. Go back home or jump straight to the free photo and signature checker."
+  noindex={true}
+>
+  <div class="prose error-page">
+    <p class="error-code" aria-hidden="true">404</p>
+    <h1>That page doesn't exist</h1>
+    <p>The link you followed may be outdated, or you may have typed the address slightly wrong. Nothing of yours was uploaded or lost — DocCheck runs in your browser.</p>
+    <div class="btn-row error-actions">
+      <a class="btn-primary" href="/" style="text-decoration:none;text-align:center;">Go to Homepage</a>
+      <a class="btn-ghost" href="/#check" style="text-decoration:none;text-align:center;">Check a File</a>
+    </div>
+    <h2>Popular pages</h2>
+    <ul>
+      <li><a href="/requirements/">Browse all requirements</a></li>
+      <li><a href="/ssc-photo-and-signature-resizer/">SSC photo and signature resizer</a></li>
+      <li><a href="/upsc-photo-and-signature-resizer/">UPSC photo and signature resizer</a></li>
+      <li><a href="/ibps-photo-and-signature-resizer/">IBPS photo and signature resizer</a></li>
+      <li><a href="/rrb-photo-and-signature-resizer/">RRB photo and signature resizer</a></li>
+      <li><a href="/passport-photo-resizer/">Passport photo resizer</a></li>
+      <li><a href="/how-it-works/">How It Works</a></li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .error-page { text-align: center; max-width: 60ch; margin: 0 auto; padding: 24px 0 8px; }
+  .error-page h1 { margin-top: 0; }
+  .error-page ul { text-align: left; }
+  .error-code {
+    font-family: var(--mono);
+    font-size: clamp(4rem, 18vw, 7rem);
+    font-weight: 600;
+    line-height: 1;
+    margin: 0;
+    color: var(--authority);
+    letter-spacing: 0.04em;
+  }
+  .error-actions { grid-template-columns: 1fr 1fr; max-width: 480px; margin: 16px auto 0; }
+  .error-actions a { display: inline-block; padding: 12px 14px; }
+  @media (max-width: 640px) {
+    .error-actions { grid-template-columns: 1fr; }
+  }
+</style>
