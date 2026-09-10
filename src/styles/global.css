@@ -271,6 +271,22 @@ button.formbtn.active { border-color: var(--authority); background: var(--author
 .reflist a:hover { border-color: var(--authority); }
 .refgroup { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin: 18px 0 6px; }
 
+/* ============ FAQ accordion (matches design system) ============ */
+.faq { display: grid; gap: 8px; margin-top: 10px; }
+.faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); }
+.faq-item:has(.faq-q[aria-expanded="true"]) { border-color: var(--authority); }
+.faq-h { margin: 0; font-size: 1rem; }
+.faq-q {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 14px; font-weight: 700; text-align: left; color: var(--ink);
+  border-radius: var(--r-md);
+}
+.faq-q:hover { background: var(--surface-2); }
+.faq-icon { font-family: var(--mono); font-weight: 600; color: var(--authority); flex: none; font-size: 1.1rem; }
+.faq-a { padding: 0 14px 14px; }
+.faq-a p { margin: 0; font-size: 0.95rem; }
+
 /* ============ Responsive ============ */
 @media (max-width: 640px) {
   h1 { font-size: 1.4rem; }

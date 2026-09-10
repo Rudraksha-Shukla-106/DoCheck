@@ -1,6 +1,98 @@
 ---
 import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
 import requirements from '../data/requirements.json';
+
+const faqs = [
+  {
+    q: 'What is a photo and signature resizer?',
+    a: 'A photo and signature resizer prepares your photo or signature for an online form. DocCheck combines a photo and signature checker with a fixing tool: select your exact form, upload your file, and it checks file size, dimensions, format and aspect ratio against that form\u2019s published requirements, identifies which requirement fails, automatically fixes supported issues, verifies the corrected file again, and gives you the fixed file to download. The core check-and-fix process runs in your browser.',
+  },
+  {
+    q: 'How can I resize a photo for an online exam form?',
+    a: 'Select the exact exam form in the checker above \u2014 for example SSC CGL 2026 photo \u2014 upload your photo, and click Fix automatically. The exam photo resizer adjusts dimensions, compresses the file into the required KB window and converts it to the required format, then verifies the fixed file before download. Always confirm the final file on the live application portal.',
+  },
+  {
+    q: 'How can I resize a signature for an online application?',
+    a: 'Select the signature entry for your form \u2014 for example SSC CGL 2026 signature \u2014 and upload a clear scan in black or blue ink on white paper. DocCheck checks its size, dimensions and format, then the fixing tool compresses it into the required KB window, preserves the required shape and converts it to JPG where needed, verifies the result again, and lets you download it.',
+  },
+  {
+    q: 'How do I reduce a photo to the required KB size?',
+    a: 'Check the photo first to see how far over the maximum it is \u2014 phone cameras often produce 1 to 5 MB files when a typical government exam photo size is 20 to 50 KB. Then click Fix automatically: the photo size reducer and photo compressor for exam compress the image step by step into the selected form\u2019s KB window and re-verify it. If your file is below the minimum, it is flagged instead, because over-compressed images can lose quality.',
+  },
+  {
+    q: 'How do I reduce a signature to the required KB size?',
+    a: 'Upload the signature under its exact form entry to see its current KB size against the required minimum and maximum of that typical government exam signature size window. Fix automatically then compresses the signature image into that window and converts it to the required format where supported. Use a clean scan on white paper so compression keeps the signature readable, and verify the fixed file before downloading.',
+  },
+  {
+    q: 'How do I resize a photo to the required pixel dimensions?',
+    a: 'Upload the photo under your exact form to see your pixels side by side with the required pixels \u2014 for example, DocCheck lists the SSC CGL 2026 photo as 100 by 100 px. Fix automatically resizes to those exact pixels where the requirement uses pixels. Where a form specifies cm or mm, the image size reducer preserves the required ratio and compresses into the KB bounds, then shows the new dimensions for verification.',
+  },
+  {
+    q: 'How do I check if my photo meets an exam\u2019s requirements?',
+    a: 'Select your category and the exact form and notification in the checker, then upload your photo. The photo requirements checker reads its KB size, pixel dimensions, format and aspect ratio where applicable, compares each value with the published exam photo requirements for that form, and shows which checks pass and which need fixing, with the official source and verification date alongside.',
+  },
+  {
+    q: 'How do I check if my signature meets an exam\u2019s requirements?',
+    a: 'Select the signature entry for your exact form and notification, then upload your signature scan. The signature size checker reads its KB size, dimensions and format, compares each against that form\u2019s published signature limits, and identifies exactly which requirement fails so you can fix it before uploading to the portal.',
+  },
+  {
+    q: 'How can I check photo and signature size before uploading?',
+    a: 'Use the photo upload checker above before visiting the portal. Choose the form, upload the file, and DocCheck reads its file size, dimensions and format locally in your browser and compares each against the selected requirement. You see your values next to the required values, so you know what to fix instead of facing a rejection after submission.',
+  },
+  {
+    q: 'Can I resize and compress a photo online for government exams?',
+    a: 'Yes. DocCheck works as a photo resizer for government exams with JPG, JPEG and PNG photos in your browser and no sign-up. After checking, Fix automatically resizes, compresses and converts supported files into the selected form\u2019s limits and verifies the result for download. PDF files show size information only and need to be converted to JPG first.',
+  },
+  {
+    q: 'Can I resize a signature online for government exams?',
+    a: 'Yes. Select the signature entry for your exam, upload your scanned signature, and this exam photo and signature resizer applies the same flow: check size, dimensions and format, identify failures, compress and convert supported files, verify the corrected file again, and provide it for download. Scans should use dark ink on plain white paper for the best result.',
+  },
+  {
+    q: 'What should I do if my photo is too large for an exam form?',
+    a: 'Select your exact form, upload the photo to confirm by how much it exceeds the maximum, then click Fix automatically to compress it into the allowed KB window, correct dimensions and convert the format where supported. Verify the fixed file in the before-and-after panel before downloading. If the shape or background is wrong, retake the photo with the required background rather than stretching it.',
+  },
+  {
+    q: 'What should I do if my signature file is too large?',
+    a: 'Check the signature under its exact form entry to see the required maximum, then run Fix automatically to compress it into that window and convert it to the required format. If the scan is still too large or blurry, rescan at a lower resolution in black or blue ink on white paper and check again. The corrected file is verified before download.',
+  },
+  {
+    q: 'Can I check the file size, dimensions and format of a photo?',
+    a: 'Yes. The photo size checker reads all three from your uploaded photo: KB size, pixel dimensions and format, plus aspect ratio where the form requires a shape such as 1 by 1. Each value is shown next to the requirement for the form you selected, with a pass or fail status.',
+  },
+  {
+    q: 'Can I check the file size, dimensions and format of a signature?',
+    a: 'Yes. The signature size checker reads the KB size, dimensions and format of your uploaded signature and compares each against the signature limits of the form you selected. Failures are identified row by row so you know whether size, shape or format needs fixing.',
+  },
+  {
+    q: 'Does DocCheck automatically fix photo and signature requirements?',
+    a: 'Where supported, yes. For JPG, JPEG and PNG photos and signatures, Fix automatically resizes dimensions, compresses KB size and converts format in one pass, then re-verifies the corrected file. Not everything can be fixed automatically: PDF files show size information only, and issues like a wrong background, face position or an unverified requirement still need your attention, and the live portal remains the final authority.',
+  },
+  {
+    q: 'Can DocCheck verify the file after resizing it?',
+    a: 'Yes. After Fix automatically runs, DocCheck reads the corrected file again and re-runs the same checks for size, dimensions and format. A before-and-after panel shows the original next to the fixed file with its new KB size, dimensions and format, plus an updated pass and fail ledger, so you only download a file you have seen verified.',
+  },
+  {
+    q: 'Does DocCheck support SSC photo and signature requirements?',
+    a: 'Yes. DocCheck includes SSC CGL 2026 entries: the SSC photo size is listed as 20 to 50 KB, JPG or JPEG, 100 by 100 px with a 1 by 1 ratio, verified against the official notification, and the SSC signature size is listed as 10 to 20 KB, JPG or JPEG with a 2 by 1 shape. The SSC signature record notes that the notification\u2019s sections state slightly different figures, so use the SSC photo resizer and SSC signature resizer entries in the checker and follow what the live SSC portal shows.',
+  },
+  {
+    q: 'Does DocCheck support UPSC photo and signature requirements?',
+    a: 'Yes. DocCheck includes UPSC CSE 2026 photo and signature entries, currently listed as JPG or JPEG with the UPSC photo size between 20 and 50 KB and the signature between 10 and 20 KB. These records are marked as needing recheck because limits can differ by notification and cycle, so select the relevant UPSC form, use the UPSC photo resizer and UPSC signature resizer checks, and confirm on the live UPSC portal.',
+  },
+  {
+    q: 'Does DocCheck support IBPS photo and signature requirements?',
+    a: 'Yes. DocCheck includes IBPS PO 2026 photo and signature entries, currently listed as JPG or JPEG with the IBPS photo size between 20 and 50 KB and the signature between 10 and 20 KB in black ink on white paper. These records are marked as needing recheck because IBPS guidance can vary, so select the relevant IBPS form, use the IBPS photo resizer and IBPS signature resizer checks, and verify against the live IBPS portal and notification.',
+  },
+  {
+    q: 'Does DocCheck support RRB photo and signature requirements?',
+    a: 'Yes, but RRB limits vary by notification. DocCheck includes RRB NTPC 2026 photo and signature entries marked as needing recheck, without fixed KB or pixel values in the current data. Select the relevant RRB form in the checker, review its published requirements and source note, and always follow the exact limits shown on the live RRB portal for your notification.',
+  },
+  {
+    q: 'Can I resize a passport photo for an application?',
+    a: 'Yes. DocCheck includes an Indian Passport photo entry listed as 51 by 51 mm with a 1 by 1 ratio, JPG or JPEG, plain white background and full face visible, following Passport Seva guidance. Select Indian Passport photo in the checker, upload your image, and the passport photo resizer crops toward the required square shape, resizes and converts to JPG, then verifies the result for download.',
+  },
+];
 
 const title = 'Photo and Signature Resizer – Check, Fix & Verify | DocCheck';
 const description =
@@ -27,33 +119,11 @@ const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'How do I check my photo size and signature size before uploading?',
-        acceptedAnswer: { '@type': 'Answer', text: 'Select your category and exact form in the checker above, upload your file, and DocCheck reads its KB size, dimensions and format, then compares each value against the published requirement for that form.' },
-      },
-      {
-        '@type': 'Question',
-        name: 'What does the automatic fix do?',
-        acceptedAnswer: { '@type': 'Answer', text: 'When supported, Fix automatically resizes dimensions, compresses the file into the required KB window and converts it to the required format (usually JPG), then re-verifies the corrected file so you can download it.' },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is the photo size for SSC and other government exams?',
-        acceptedAnswer: { '@type': 'Answer', text: 'Most government exam photos must be JPG/JPEG between 20 KB and 50 KB with a white background, and signatures between 10 KB and 20 KB — but exact dimensions vary per notification. Select your exam in the tool to check against its published limits.' },
-      },
-      {
-        '@type': 'Question',
-        name: 'Does DocCheck guarantee my upload will be accepted?',
-        acceptedAnswer: { '@type': 'Answer', text: 'No. DocCheck checks your file against the selected form\u2019s published requirements and helps prepare it accordingly. The live application portal is always the final authority.' },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is my photo uploaded to a server?',
-        acceptedAnswer: { '@type': 'Answer', text: 'No. The core check-and-fix process runs entirely in your browser — reading, resizing, compressing and converting happen on your device, with no sign-up required.' },
-      },
-    ],
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   },
 ];
 
@@ -256,16 +326,7 @@ const categories = [
 
   <section class="prose" aria-label="Frequently asked questions" data-reveal>
     <h2>Photo and signature resizer — FAQs</h2>
-    <h3>How do I check my photo size and signature size?</h3>
-    <p>Choose your category and exact form in the checker, upload your file, and the photo signature size checker reads KB size, dimensions and format, then compares each against the published requirement.</p>
-    <h3>How do I resize a photo online for SSC or another government exam?</h3>
-    <p>Select your exam form, upload the photo, and click Fix automatically. The photo resizer for government exams resizes dimensions, compresses into the KB window and converts to JPG, then verifies the result for download.</p>
-    <h3>Can I resize my signature online too?</h3>
-    <p>Yes. Select the signature entry for your form — for example the SSC signature resizer — upload your scanned signature, and the signature resizer for government exams applies the same check, fix, verify and download flow.</p>
-    <h3>What KB size do exam photos and signatures need?</h3>
-    <p>Many exams ask for photos between 20 KB and 50 KB and signatures between 10 KB and 20 KB, but limits vary per notification. Always check against your specific form's requirement page and the live portal.</p>
-    <h3>Does DocCheck guarantee my file will be accepted?</h3>
-    <p>No. DocCheck checks your file against the selected form's published requirements and helps prepare it accordingly. The live application portal is always the final authority.</p>
+    <Faq items={faqs} />
   </section>
 
   <section aria-label="Browse exam photo requirements" data-reveal>

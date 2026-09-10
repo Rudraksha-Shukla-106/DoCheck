@@ -1,0 +1,43 @@
+---
+interface FaqItem {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: FaqItem[];
+  idPrefix?: string;
+}
+const { items, idPrefix = 'faq' } = Astro.props;
+---
+<div class="faq">
+  {items.map((item, i) => {
+    const btnId = `${idPrefix}-btn-${i}`;
+    const panelId = `${idPrefix}-panel-${i}`;
+    return (
+      <div class="faq-item">
+        <h3 class="faq-h">
+          <button type="button" class="faq-q" id={btnId} aria-expanded="false" aria-controls={panelId}>
+            <span>{item.q}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+        </h3>
+        <div class="faq-a" id={panelId} role="region" aria-labelledby={btnId} hidden>
+          <p>{item.a}</p>
+        </div>
+      </div>
+    );
+  })}
+</div>
+<script>
+  const buttons = Array.from(document.querySelectorAll('.faq-q'));
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      const panel = document.getElementById(btn.getAttribute('aria-controls') || '');
+      if (panel) panel.hidden = expanded;
+      const icon = btn.querySelector('.faq-icon');
+      if (icon) icon.textContent = expanded ? '+' : '–';
+    });
+  });
+</script>
