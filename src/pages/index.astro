@@ -300,6 +300,8 @@ const categories = [
       document.getElementById('matchLine').hidden = true;
       accuracyNote.textContent = '';
       downloadNote.textContent = '';
+      delete document.body.dataset.result;
+      document.body.dataset.stage = currentReq ? 'form' : activeCat ? 'category' : '';
       fixedBlob = null;
       if (fixedUrl) { URL.revokeObjectURL(fixedUrl); fixedUrl = null; }
     }
@@ -476,6 +478,8 @@ const categories = [
         return;
       }
       currentFile = f;
+      document.body.dataset.stage = 'file';
+      delete document.body.dataset.result;
       updateProgress();
       if (fixedUrl) { URL.revokeObjectURL(fixedUrl); fixedUrl = null; }
       fixedBlob = null;
@@ -499,9 +503,13 @@ const categories = [
       paintRows(rows);
       if (fails.length === 0) {
         paintVerdict(true, '✅ READY TO UPLOAD', `Your file meets the published requirements for ${currentReq.form_name}.`);
+        document.body.dataset.result = 'pass';
+        document.body.dataset.stage = 'result';
         fixBox.hidden = true;
       } else {
         paintVerdict(false, `⚠ ${fails.length} ISSUE${fails.length > 1 ? 'S' : ''} TO FIX`, 'Each failed row shows your file against the requirement.');
+        document.body.dataset.result = 'fail';
+        document.body.dataset.stage = 'result';
         const isPdf = f.type === 'application/pdf' || /pdf$/i.test(f.name);
         fixBox.hidden = false;
         fixBtn.disabled = isPdf;
@@ -547,8 +555,10 @@ const categories = [
         paintRows(rows);
         if (fails.length === 0) {
           paintVerdict(true, '✅ READY TO UPLOAD', `Fixed file is ${(fixedBlob.size / 1024).toFixed(1)} KB, corrected format and size.`);
+          document.body.dataset.result = 'pass';
         } else {
           paintVerdict(false, `⚠ ${fails.length} ISSUE${fails.length > 1 ? 'S' : ''} REMAIN${fails.length > 1 ? '' : 'S'}`, 'The fixed file still differs on the rows marked FAIL — compare before and after below.');
+          document.body.dataset.result = 'fail';
         }
         downloadRow.hidden = false;
         downloadBtn.disabled = false;

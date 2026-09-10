@@ -28,6 +28,26 @@ import '../styles/global.css';
     />
   </head>
   <body>
+    <div class="ambient" aria-hidden="true">
+      <svg class="ambient-doc" viewBox="0 0 460 620" focusable="false">
+        <g fill="none" stroke="var(--authority)" stroke-opacity="0.55" stroke-width="2">
+          <rect x="60" y="30" width="300" height="420" rx="6"/>
+          <rect x="90" y="60" width="110" height="130" rx="3"/>
+          <path d="M220 70h110M220 95h90M220 120h100M220 145h80" stroke-width="6" stroke-linecap="round"/>
+          <path d="M90 230h240M90 260h200M90 290h220" stroke-width="6" stroke-linecap="round"/>
+          <path d="M60 30v-12M90 30v-12M120 30v-12M150 30v-12M180 30v-12M210 30v-12M240 30v-12M270 30v-12M300 30v-12M330 30v-12M360 30v-12M60 60h-12M60 110h-12M60 160h-12M60 210h-12M60 260h-12M60 310h-12M60 360h-12M60 410h-12" stroke-width="1.5"/>
+          <circle cx="330" cy="400" r="22"/>
+          <path d="M320 400l7 7 14-15" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 480h60M20 480v60M400 60h-60M400 60v-60" stroke-width="1.5"/>
+        </g>
+        <g fill="var(--authority)" fill-opacity="0.55" font-family="monospace" font-size="13" letter-spacing="3">
+          <text x="210" y="14" text-anchor="middle">WIDTH</text>
+          <text x="38" y="240" text-anchor="middle" transform="rotate(-90 38 240)">HEIGHT</text>
+          <text x="90" y="480">FORMAT · JPG</text>
+          <text x="90" y="502">SIZE · KB</text>
+        </g>
+      </svg>
+    </div>
     <Header />
     <main class="wrap">
       <slot />
