@@ -25,16 +25,42 @@ const categories = [
 ---
 <Base title="Check your file before you upload it">
   <section class="hero">
-    <h1>Check your file before you upload it.</h1>
-    <p class="lede">Verify photo, signature and document files against published form requirements — then fix common issues in one click.</p>
-    <div class="hero-cta">
-      <a class="btn-primary" href="#check" style="text-decoration:none;text-align:center;">Check a File</a>
-      <a href="/requirements/">Browse Requirements</a>
+    <div class="hero-grid">
+      <div>
+        <h1>Check your file before you upload it.</h1>
+        <p class="lede">Verify photo, signature and document files against published form requirements — then fix common issues in one click.</p>
+        <div class="hero-cta">
+          <a class="btn-primary" href="#check" style="text-decoration:none;text-align:center;">Check a File</a>
+          <a href="/requirements/">Browse Requirements</a>
+        </div>
+        <p class="trustline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:3px;"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          Your file stays in your browser during the core check-and-fix process.
+        </p>
+      </div>
+      <figure class="verify-fig" aria-hidden="true">
+        <svg viewBox="0 0 300 190">
+          <rect x="70" y="8" width="160" height="158" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <rect x="95" y="28" width="110" height="104" rx="4" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+          <rect x="103" y="36" width="34" height="44" rx="2" fill="none" stroke="var(--authority)" stroke-width="1.5"/>
+          <circle cx="120" cy="52" r="7" fill="none" stroke="var(--authority)" stroke-width="1.5"/>
+          <path d="M110 72c2-5 5-7 10-7s8 2 10 7" fill="none" stroke="var(--authority)" stroke-width="1.5"/>
+          <rect x="145" y="38" width="52" height="7" rx="2" fill="var(--line)"/>
+          <rect x="145" y="51" width="40" height="7" rx="2" fill="var(--line)"/>
+          <rect x="145" y="64" width="46" height="7" rx="2" fill="var(--line)"/>
+          <rect x="103" y="92" width="94" height="7" rx="2" fill="var(--line)"/>
+          <rect x="103" y="105" width="70" height="7" rx="2" fill="var(--line)"/>
+          <rect x="103" y="118" width="80" height="7" rx="2" fill="var(--line)"/>
+          <rect class="scanline" x="95" y="28" width="110" height="3" fill="var(--authority)"/>
+          <g class="scancheck">
+            <circle cx="216" cy="142" r="17" fill="var(--pass-bg)" stroke="var(--pass)" stroke-width="2.5"/>
+            <path d="M208 142l6 6 12-13" fill="none" stroke="var(--pass)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text class="scanready" x="150" y="182" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="var(--pass)">✓ READY</text>
+        </svg>
+        <figcaption>Upload → Check → Verify → Ready</figcaption>
+      </figure>
     </div>
-    <p class="trustline">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:3px;"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
-      Your file stays in your browser during the core check-and-fix process.
-    </p>
   </section>
 
   <section id="check" aria-label="File checker">
@@ -93,6 +119,7 @@ const categories = [
         <p class="step-title">Check, fix &amp; download</p>
         <p class="hint" id="resultsEmpty">Your check result will appear here after you upload a file.</p>
         <span id="verdict" class="verdict" hidden aria-live="polite"></span>
+        <p class="matchline" id="matchLine" hidden aria-live="polite"></p>
         <div class="report" id="ledger" hidden>
           <div class="report-head" aria-hidden="true"><span>Your file</span><span>Requirement</span><span>Status</span></div>
           <div id="ledgerBody"></div>
@@ -135,7 +162,7 @@ const categories = [
     </ol>
   </section>
 
-  <section aria-label="Browse requirements">
+  <section aria-label="Browse requirements" data-reveal>
     <h2>Browse requirements</h2>
     <ul class="reflist">
       {requirements.map((r) => (
@@ -189,6 +216,29 @@ const categories = [
     let thumbUrl = null;
 
     document.getElementById('appStatus').textContent = '✓ Ready — choose a category above to begin.';
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('[data-reveal]').forEach((el) => { el.classList.add('reveal'); io.observe(el); });
+    }
+
+    function updateMatchLine(rows) {
+      const matchLine = document.getElementById('matchLine');
+      const passed = rows.filter((r) => r.pass === true).length;
+      const failed = rows.filter((r) => r.pass === false).length;
+      matchLine.hidden = false;
+      matchLine.innerHTML = '';
+      const ok = document.createElement('span');
+      ok.className = 'ok';
+      ok.textContent = `✓ ${passed} check${passed === 1 ? '' : 's'} passed`;
+      const sep = document.createTextNode(' · ');
+      const bad = document.createElement('span');
+      bad.className = 'bad';
+      bad.textContent = failed === 0 ? '✓ nothing to fix' : `✗ ${failed} need${failed === 1 ? 's' : ''} fixing`;
+      matchLine.append(ok, sep, bad);
+    }
 
     function statusLabel(r) {
       if (r.status === 'verified') return 'verified';
@@ -247,6 +297,7 @@ const categories = [
       downloadRow.hidden = true;
       beforeAfter.hidden = true;
       resultsEmpty.hidden = false;
+      document.getElementById('matchLine').hidden = true;
       accuracyNote.textContent = '';
       downloadNote.textContent = '';
       fixedBlob = null;
@@ -414,6 +465,7 @@ const categories = [
         row.append(vals, pill);
         ledgerBody.appendChild(row);
       });
+      updateMatchLine(rows);
     }
 
     async function handleFile() {
