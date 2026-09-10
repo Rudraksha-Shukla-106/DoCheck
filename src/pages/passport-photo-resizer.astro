@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Passport Photo Resizer — Passport Photo Size Checker (51x51 mm)';
+const description =
+  'Free passport photo resizer & passport photo size checker. Check 51x51 mm dimensions, white background and JPG format for Indian Passport, resize photo online and compress — in your browser.';
+const keywords =
+  'passport photo resizer, passport photo size checker, passport photo size, photo and signature resizer, photo size checker, photo resize online, photo size reducer, image size reducer';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the Indian passport photo size?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Indian Passport photos are 51 x 51 mm (2 x 2 inch), colour, plain white background, full face visible, JPG/JPEG. Follow Passport Seva guidelines exactly.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I resize my passport photo online?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Select Indian Passport — photo in the photo and signature resizer, upload your image and click Fix automatically to resize to 1:1 ratio, compress and convert to JPG, then download.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/passport-photo-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Passport Photo Resizer</nav>
+  <h1>Passport Photo Resizer &amp; Size Checker</h1>
+  <p class="lede">Free <strong>passport photo resizer</strong> and <strong>passport photo size checker</strong> — verify 51 × 51 mm dimensions, white background and JPG format for Indian Passport / Passport Seva, then <strong>resize photo online</strong> and compress.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Check my passport photo</a></p>
+
+  <h2>Passport photo size — official guidance</h2>
+  <div class="report" role="table" aria-label="Passport photo size">
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">DIMENSIONS</span><div class="actual num">51 × 51 mm (1:1 ratio)</div><div class="req">Full face visible, plain white background. <a href="/requirements/passport-photo-size-india/">Full passport photo details →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">FORMAT</span><div class="actual num">JPG / JPEG</div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>How to resize a passport photo</h2>
+    <ol>
+      <li>Open the <a href="/#check">photo and signature resizer</a> and choose <strong>Indian Passport — photo</strong>.</li>
+      <li>Upload your photo — the <strong>photo size checker</strong> reads dimensions, format and KB size.</li>
+      <li>Click <strong>Fix automatically</strong> to crop to 1:1, resize and convert to JPG.</li>
+      <li>Download for online upload or printing. Passport Seva guidance is the final authority.</li>
+    </ol>
+    <h2>Passport photo tips</h2>
+    <ul>
+      <li>Plain white background, even lighting, no shadows or filters.</li>
+      <li>Neutral expression, eyes open, full face centred in the frame.</li>
+      <li>No caps, tinted glasses or heavy edits — keep it natural and recent.</li>
+    </ul>
+    <p>Resizing for exams instead? See the <a href="/exam-photo-and-signature-resizer/">exam photo and signature resizer</a> or <a href="/">home-page photo and signature resizer</a>.</p>
+  </div>
+</Base>

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Exam Photo and Signature Resizer — Resize Photos for SSC, UPSC, IBPS, RRB';
+const description =
+  'Free exam photo and signature resizer. Check exam photo requirements, resize photo online, resize signature online, reduce image size and compress for SSC, UPSC, IBPS, RRB and all government exams — in your browser.';
+const keywords =
+  'exam photo resizer, exam photo and signature resizer, photo resizer for government exams, signature resizer for government exams, photo and signature resizer, photo and signature checker, photo size checker, signature size checker, photo compressor for exam, exam photo requirements';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Which exams does this exam photo resizer support?',
+      acceptedAnswer: { '@type': 'Answer', text: 'SSC CGL, UPSC CSE, IBPS PO, RRB NTPC, plus passport, PAN, Voter ID and Bank KYC uploads. Each has a sourced requirement page and one-click resize.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I resize an exam photo to 20–50 KB?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Select your exam form in the photo and signature resizer, upload your photo and click Fix automatically. The photo compressor for exam use shrinks the file into the KB window and converts it to JPG.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/exam-photo-and-signature-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Exam Photo and Signature Resizer</nav>
+  <h1>Exam Photo and Signature Resizer</h1>
+  <p class="lede">One <strong>exam photo resizer</strong> for every major Indian exam — the <strong>exam photo and signature resizer</strong> checks <strong>exam photo requirements</strong>, runs a <strong>photo upload checker</strong>, and lets you <strong>resize photo online</strong> / <strong>resize signature online</strong> for SSC, UPSC, IBPS and RRB.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Resize my exam photo now</a></p>
+
+  <h2>Choose your exam resizer</h2>
+  <ul class="reflist">
+    <li><a href="/ssc-photo-and-signature-resizer/"><span>SSC photo and signature resizer — 20–50 KB photo · 10–20 KB signature</span><span class="badge verified">verified</span></a></li>
+    <li><a href="/upsc-photo-and-signature-resizer/"><span>UPSC photo and signature resizer — CSE photo &amp; signature</span><span class="badge needs_recheck">needs recheck</span></a></li>
+    <li><a href="/ibps-photo-and-signature-resizer/"><span>IBPS photo and signature resizer — PO photo &amp; signature</span><span class="badge needs_recheck">needs recheck</span></a></li>
+    <li><a href="/rrb-photo-and-signature-resizer/"><span>RRB photo and signature resizer — NTPC photo &amp; signature</span><span class="badge needs_recheck">needs recheck</span></a></li>
+    <li><a href="/passport-photo-resizer/"><span>Passport photo resizer — 51 × 51 mm checker</span><span class="badge needs_recheck">needs recheck</span></a></li>
+    <li><a href="/photo-resizer-for-government-exams/"><span>Photo resizer for government exams — full guide</span><span class="badge verified">guide</span></a></li>
+  </ul>
+
+  <div class="prose">
+    <h2>How the exam photo resizer works</h2>
+    <ol>
+      <li>Pick your exam above (or on the <a href="/#check">home-page photo and signature resizer</a>).</li>
+      <li>Upload — the <strong>photo and signature checker</strong> reads KB size, dimensions and JPG format.</li>
+      <li>Click <strong>Fix automatically</strong> — the <strong>photo size reducer</strong> + <strong>image size reducer</strong> compresses and resizes into limits.</li>
+      <li>Download and submit on the live portal.</li>
+    </ol>
+    <h2>Why one hub for all exams?</h2>
+    <p>Every exam portal writes its <strong>government exam photo size</strong> and <strong>government exam signature size</strong> differently — KB windows, pixel vs. cm dimensions, JPG-only rules. This hub links each exam to its sourced requirement page so you never guess: <a href="/requirements/ssc-cgl-photo-size/">SSC photo size</a>, <a href="/requirements/ssc-cgl-signature-size/">SSC signature size</a>, <a href="/requirements/upsc-photo-size/">UPSC photo size</a>, <a href="/requirements/upsc-signature-size/">UPSC signature size</a>, <a href="/requirements/ibps-photo-size/">IBPS photo size</a>, <a href="/requirements/ibps-signature-size/">IBPS signature size</a>, <a href="/requirements/rrb-photo-size/">RRB photo size</a> and <a href="/requirements/rrb-signature-size/">RRB signature size</a>.</p>
+  </div>
+</Base>

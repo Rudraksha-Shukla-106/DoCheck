@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'IBPS Photo and Signature Resizer — IBPS Photo Size Checker';
+const description =
+  'Free IBPS photo resizer & IBPS signature resizer. Check IBPS photo size (20–50 KB) and signature size, resize photo online, resize signature online and compress for IBPS PO — in your browser.';
+const keywords =
+  'IBPS photo resizer, IBPS signature resizer, IBPS photo size, photo and signature resizer, exam photo resizer, photo size checker, signature size checker, photo size reducer, photo resize online';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the IBPS photo size?',
+      acceptedAnswer: { '@type': 'Answer', text: 'IBPS PO photo is typically 20–50 KB JPG/JPEG, passport-size with a light background. Verify on the live IBPS portal and re-check with the photo size checker.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I resize my IBPS photo and signature?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Select IBPS PO 2026 — photo or signature in the photo and signature resizer, upload, and click Fix automatically to compress and convert your file, then download.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/ibps-photo-and-signature-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / IBPS Photo and Signature Resizer</nav>
+  <h1>IBPS Photo and Signature Resizer</h1>
+  <p class="lede">Free <strong>IBPS photo resizer</strong> and <strong>IBPS signature resizer</strong> — the <strong>photo and signature checker</strong> for IBPS PO photo and signature uploads. <strong>Resize photo online</strong>, compress KB size and convert to JPG.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Resize my IBPS photo now</a></p>
+
+  <h2>IBPS photo size &amp; signature limits</h2>
+  <div class="report" role="table" aria-label="IBPS photo size">
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">IBPS PHOTO SIZE</span><div class="actual num">20–50 KB · JPG/JPEG</div><div class="req"><a href="/requirements/ibps-photo-size/">Full IBPS photo details →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">IBPS SIGNATURE SIZE</span><div class="actual num">10–20 KB · JPG/JPEG · black ink on white paper</div><div class="req"><a href="/requirements/ibps-signature-size/">Full IBPS signature details →</a></div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>How to fix IBPS uploads in one click</h2>
+    <ol>
+      <li>Open the <a href="/#check">exam photo and signature resizer</a> and pick <strong>IBPS PO 2026 — photo</strong> or <strong>signature</strong>.</li>
+      <li>Upload — the <strong>photo upload checker</strong> flags KB, format and dimension failures.</li>
+      <li>Click <strong>Fix automatically</strong> — the <strong>photo size reducer</strong> compresses and converts your file.</li>
+      <li>Download and upload to the IBPS portal.</li>
+    </ol>
+    <p>Also see: <a href="/ssc-photo-and-signature-resizer/">SSC photo resizer</a> · <a href="/upsc-photo-and-signature-resizer/">UPSC photo resizer</a> · <a href="/rrb-photo-and-signature-resizer/">RRB photo resizer</a> · <a href="/photo-resizer-for-government-exams/">photo resizer for government exams</a>.</p>
+  </div>
+</Base>

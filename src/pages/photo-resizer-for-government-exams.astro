@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Photo Resizer for Government Exams — Signature Resizer, Size Checker & Guide';
+const description =
+  'Free photo resizer for government exams & signature resizer for government exams. Check government exam photo size and signature size, photo upload checker, image size reducer and compressor for SSC, UPSC, IBPS, RRB.';
+const keywords =
+  'photo resizer for government exams, signature resizer for government exams, government exam photo size, government exam signature size, photo and signature resizer, exam photo requirements, photo requirements checker, photo upload checker, photo size reducer, image size reducer';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the standard government exam photo size?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Most government exam photos must be JPG/JPEG between 20 KB and 50 KB with a white background. Signatures are usually 10–20 KB. Exact pixel or cm dimensions vary per notification — always confirm on the live portal.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I compress a photo for a government exam form?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Use the photo and signature resizer: select your exam, upload the photo and click Fix automatically. The photo size reducer compresses the image into the required KB window and converts it to JPG.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/photo-resizer-for-government-exams/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Photo Resizer for Government Exams</nav>
+  <h1>Photo Resizer for Government Exams</h1>
+  <p class="lede">The <strong>photo resizer for government exams</strong> and <strong>signature resizer for government exams</strong> in one place: check <strong>government exam photo size</strong> and <strong>government exam signature size</strong> limits, run the <strong>photo upload checker</strong>, and compress with the <strong>photo size reducer</strong> — privately in your browser.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Check my government exam photo</a></p>
+
+  <h2>Government exam photo size — quick reference</h2>
+  <div class="report" role="table" aria-label="Government exam photo sizes">
+    <div class="report-head" aria-hidden="true"><span>Exam</span><span>Photo / Signature</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">SSC CGL</span><div class="actual num">Photo 20–50 KB · Signature 10–20 KB</div><div class="req"><a href="/ssc-photo-and-signature-resizer/">SSC resizer →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">UPSC CSE</span><div class="actual num">Photo 20–50 KB · Signature 10–20 KB</div><div class="req"><a href="/upsc-photo-and-signature-resizer/">UPSC resizer →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">IBPS PO</span><div class="actual num">Photo 20–50 KB · Signature 10–20 KB</div><div class="req"><a href="/ibps-photo-and-signature-resizer/">IBPS resizer →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">RRB NTPC</span><div class="actual num">As per notification · JPG</div><div class="req"><a href="/rrb-photo-and-signature-resizer/">RRB resizer →</a></div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>Why government forms reject photos</h2>
+    <p>Portals enforce a strict <strong>photo requirements checker</strong>: KB minimums and maximums, exact dimensions (pixels, cm or mm), JPG-only format, white background and legible signatures. Phone cameras produce 1–5 MB HEIC/PNG files that instantly fail. This tool's <strong>image size reducer</strong> and <strong>photo compressor for exam</strong> use shrink any oversized file into the window, convert format, and show before / after proof — so the <strong>photo upload checker</strong> passes first time.</p>
+    <h2>Checklist before you submit any government exam form</h2>
+    <ul>
+      <li>Confirm the <strong>exam photo requirements</strong> on the live notification — limits change yearly.</li>
+      <li>Run both files through the <a href="/#check">photo and signature checker</a> — photo <em>and</em> signature.</li>
+      <li>Keep faces shadow-free on white; sign in black/blue ink on clean paper.</li>
+      <li>Save as JPG/JPEG and keep a backup of the original.</li>
+    </ul>
+    <p>Start here: <a href="/exam-photo-and-signature-resizer/">exam photo and signature resizer hub</a> · <a href="/requirements/">all exam photo requirements</a> · <a href="/">home-page photo and signature resizer</a>.</p>
+  </div>
+</Base>

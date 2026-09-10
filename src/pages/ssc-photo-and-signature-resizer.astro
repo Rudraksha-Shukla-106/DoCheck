@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'SSC Photo and Signature Resizer — SSC Photo Size & Signature Size Checker';
+const description =
+  'Free SSC photo resizer & SSC signature resizer. Check SSC photo size (20–50 KB, 100x100 px) and SSC signature size (10–20 KB), resize photo online, resize signature online and compress for SSC CGL — in your browser.';
+const keywords =
+  'SSC photo resizer, SSC signature resizer, SSC photo and signature resizer, SSC photo size, SSC signature size, photo and signature resizer, exam photo resizer, photo size checker, signature size checker, photo resize online';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://doccheck.example/' },
+      { '@type': 'ListItem', position: 2, name: 'SSC Photo and Signature Resizer', item: 'https://doccheck.example/ssc-photo-and-signature-resizer/' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is the SSC photo size for SSC CGL?',
+        acceptedAnswer: { '@type': 'Answer', text: 'SSC CGL photo size is 20–50 KB, JPG/JPEG, 100 x 100 px, white background, recent passport-size photograph. Use the SSC photo resizer above to verify and fix your file.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is the SSC signature size?',
+        acceptedAnswer: { '@type': 'Answer', text: 'SSC signature size is 10–20 KB, JPG/JPEG, black or blue ink on white paper. The notification annexure lists slightly different figures, so follow the live portal and verify with the signature size checker.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I resize my SSC photo and signature online?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Open the photo and signature resizer, select SSC CGL 2026 — photo or signature, upload your file and click Fix automatically to resize, compress and convert it, then download.' },
+      },
+    ],
+  },
+];
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/ssc-photo-and-signature-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / SSC Photo and Signature Resizer</nav>
+  <h1>SSC Photo and Signature Resizer</h1>
+  <p class="lede">Free <strong>SSC photo resizer</strong> and <strong>SSC signature resizer</strong> — check <strong>SSC photo size</strong> and <strong>SSC signature size</strong>, <strong>resize photo online</strong>, <strong>resize signature online</strong>, and compress files for SSC CGL 2026 without uploading anything.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Resize my SSC photo now</a></p>
+
+  <h2>SSC photo size &amp; SSC signature size — official limits</h2>
+  <div class="report" role="table" aria-label="SSC photo and signature size">
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">SSC PHOTO SIZE</span><div class="actual num">20–50 KB · JPG/JPEG · 100 × 100 px</div><div class="req">White background, front-facing, recent passport-size photograph. <a href="/requirements/ssc-cgl-photo-size/">Full SSC photo details →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">SSC SIGNATURE SIZE</span><div class="actual num">10–20 KB · JPG/JPEG</div><div class="req">Black or blue ink on white paper. Sources differ slightly — follow the live portal. <a href="/requirements/ssc-cgl-signature-size/">Full SSC signature details →</a></div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>How to use this SSC photo and signature resizer</h2>
+    <ol>
+      <li>Open the <a href="/#check">photo and signature resizer</a> and select <strong>SSC CGL 2026 — photo</strong> or <strong>signature</strong>.</li>
+      <li>Upload your file — the <strong>photo size checker</strong> and <strong>signature size checker</strong> read KB size, dimensions and format instantly.</li>
+      <li>Click <strong>Fix automatically</strong> — the <strong>photo size reducer</strong> resizes to 100 × 100 px (photo), preserves the 2:1 signature ratio, compresses to the KB window and converts to JPG.</li>
+      <li>Download and upload to the SSC portal. The live portal is the final authority.</li>
+    </ol>
+    <h2>Why SSC applications get rejected — and how the checker helps</h2>
+    <p>Most SSC rejections come from three avoidable errors: photos over 50 KB from modern phones, PNG or HEIC files instead of JPG, and selfies with non-white backgrounds. The built-in <strong>photo upload checker</strong> catches all three before submission, and the <strong>photo compressor for exam</strong> shrinks multi-MB camera photos into the 20–50 KB window while keeping faces clear.</p>
+    <h2>Related exam photo resizers</h2>
+    <ul>
+      <li><a href="/exam-photo-and-signature-resizer/">Exam photo and signature resizer hub</a></li>
+      <li><a href="/photo-resizer-for-government-exams/">Photo resizer for government exams</a></li>
+      <li><a href="/upsc-photo-and-signature-resizer/">UPSC photo and signature resizer</a></li>
+      <li><a href="/ibps-photo-and-signature-resizer/">IBPS photo and signature resizer</a></li>
+      <li><a href="/rrb-photo-and-signature-resizer/">RRB photo and signature resizer</a></li>
+      <li><a href="/">Home — photo and signature resizer</a></li>
+    </ul>
+  </div>
+</Base>

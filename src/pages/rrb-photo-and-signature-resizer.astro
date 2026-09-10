@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'RRB Photo and Signature Resizer — RRB Photo Size Checker';
+const description =
+  'Free RRB photo resizer & RRB signature resizer. Check RRB photo size, resize photo online, resize signature online, reduce and compress images for RRB NTPC — privately in your browser.';
+const keywords =
+  'RRB photo resizer, RRB signature resizer, RRB photo size, photo and signature resizer, exam photo resizer, photo size checker, signature size checker, photo resize online, signature resize online';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the RRB photo size for NTPC?',
+      acceptedAnswer: { '@type': 'Answer', text: 'RRB NTPC photo and signature limits vary by notification — always follow the live RRB portal. Use the RRB photo resizer to check your file size, format and dimensions before upload.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I resize my RRB photo online?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Select RRB NTPC 2026 — photo or signature in the photo and signature resizer, upload your file and click Fix automatically to resize and compress it, then download.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/rrb-photo-and-signature-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / RRB Photo and Signature Resizer</nav>
+  <h1>RRB Photo and Signature Resizer</h1>
+  <p class="lede">Free <strong>RRB photo resizer</strong> and <strong>RRB signature resizer</strong> for RRB NTPC — run the <strong>photo signature size checker</strong>, <strong>resize photo online</strong>, and fix KB size and JPG format before submission.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Resize my RRB photo now</a></p>
+
+  <h2>RRB photo size &amp; signature limits</h2>
+  <div class="report" role="table" aria-label="RRB photo size">
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">RRB PHOTO SIZE</span><div class="actual num">As per RRB notification · JPG/JPEG</div><div class="req"><a href="/requirements/rrb-photo-size/">Full RRB photo details →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">RRB SIGNATURE SIZE</span><div class="actual num">As per RRB notification · JPG/JPEG</div><div class="req"><a href="/requirements/rrb-signature-size/">Full RRB signature details →</a></div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>How to check RRB uploads</h2>
+    <ol>
+      <li>Open the <a href="/#check">photo and signature resizer</a> and select <strong>RRB NTPC 2026 — photo</strong> or <strong>signature</strong>.</li>
+      <li>Upload — the <strong>exam photo requirements</strong> checker reads your file locally.</li>
+      <li>Click <strong>Fix automatically</strong> to compress, resize and convert.</li>
+      <li>Download and upload to the RRB portal, the final authority.</li>
+    </ol>
+    <p>Also see: <a href="/ssc-photo-and-signature-resizer/">SSC photo resizer</a> · <a href="/upsc-photo-and-signature-resizer/">UPSC photo resizer</a> · <a href="/ibps-photo-and-signature-resizer/">IBPS photo resizer</a> · <a href="/exam-photo-and-signature-resizer/">exam photo and signature resizer</a>.</p>
+  </div>
+</Base>

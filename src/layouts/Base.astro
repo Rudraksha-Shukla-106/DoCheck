@@ -4,9 +4,26 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  canonical?: string;
+  keywords?: string;
+  schema?: unknown;
+  ogImage?: string;
+  noindex?: boolean;
 }
-const { title, description = 'Verify photo, signature and document files against published form requirements — then fix common issues in one click.' } = Astro.props;
+const SITE = 'https://doccheck.example';
+const {
+  title,
+  description = 'DocCheck is a free photo and signature resizer — check photo size and signature size, automatically fix, verify and download for SSC, UPSC, IBPS, RRB and passport uploads.',
+  canonical,
+  keywords,
+  schema,
+  ogImage = `${SITE}/og-image.svg`,
+  noindex = false,
+} = Astro.props;
 import '../styles/global.css';
+// Avoid "Title | DocCheck | DocCheck" duplication: pages that already include branding use their title as-is.
+const fullTitle = /doccheck/i.test(title) ? title : `${title} | DocCheck`;
+const canonicalUrl = canonical ?? `${SITE}${Astro.url.pathname}`;
 ---
 <!doctype html>
 <html lang="en">
@@ -14,11 +31,23 @@ import '../styles/global.css';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>try{var t=localStorage.getItem('docheck-theme')||'system';var d=(t==='system')?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.dataset.theme=d;}catch(e){}</script>
-    <title>{title} | DOCHECK</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content={`${title} | DOCHECK`} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="DocCheck" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" content="#1b4f9c" />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b4f9c'/%3E%3Cpath d='M9 16.5l5 5 9-11' stroke='white' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

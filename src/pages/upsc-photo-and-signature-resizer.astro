@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'UPSC Photo and Signature Resizer — UPSC Photo Size Checker & Resizer';
+const description =
+  'Free UPSC photo resizer & UPSC signature resizer. Check UPSC photo size, resize photo online, resize signature online, reduce and compress images for UPSC CSE 2026 — 100% in your browser.';
+const keywords =
+  'UPSC photo resizer, UPSC signature resizer, UPSC photo size, photo and signature resizer, exam photo resizer, photo size checker, signature size checker, photo resize online, photo compressor for exam';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the UPSC photo size for CSE?',
+      acceptedAnswer: { '@type': 'Answer', text: 'UPSC CSE photo is typically JPG/JPEG between 20–50 KB, recent passport-size photograph. Limits can change per notification, so verify on the live portal and re-check with the photo size checker.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I resize my UPSC photo and signature online?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Select UPSC CSE 2026 — photo or signature in the photo and signature resizer, upload your file and click Fix automatically to resize, compress and convert it, then download.' },
+    },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} canonical="https://doccheck.example/upsc-photo-and-signature-resizer/" schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / UPSC Photo and Signature Resizer</nav>
+  <h1>UPSC Photo and Signature Resizer</h1>
+  <p class="lede">Free <strong>UPSC photo resizer</strong> and <strong>UPSC signature resizer</strong> — check <strong>UPSC photo size</strong>, run the <strong>photo signature size checker</strong>, <strong>resize photo online</strong> and compress for UPSC CSE 2026. Private, client-side, no sign-up.</p>
+  <p><a class="btn-primary" href="/#check" style="display:inline-block;width:auto;text-decoration:none;padding:12px 26px;">Resize my UPSC photo now</a></p>
+
+  <h2>UPSC photo size &amp; signature limits</h2>
+  <div class="report" role="table" aria-label="UPSC photo size">
+    <div class="report-head" aria-hidden="true"><span>Requirement</span><span>Value</span><span></span></div>
+    <div id="ledgerBody">
+      <div class="report-row info"><div class="vals"><span class="prop">UPSC PHOTO SIZE</span><div class="actual num">20–50 KB · JPG/JPEG · recent passport-size</div><div class="req"><a href="/requirements/upsc-photo-size/">Full UPSC photo details →</a></div></div><span></span></div>
+      <div class="report-row info"><div class="vals"><span class="prop">UPSC SIGNATURE SIZE</span><div class="actual num">10–20 KB · JPG/JPEG · black ink on white paper</div><div class="req"><a href="/requirements/upsc-signature-size/">Full UPSC signature details →</a></div></div><span></span></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>How to resize UPSC photos and signatures</h2>
+    <ol>
+      <li>Open the <a href="/#check">photo and signature resizer</a>, choose <strong>UPSC CSE 2026 — photo</strong> or <strong>signature</strong>.</li>
+      <li>Upload — the <strong>photo requirements checker</strong> compares size, dimensions and format.</li>
+      <li>Click <strong>Fix automatically</strong> to run the <strong>image size reducer</strong> and <strong>photo compressor for exam</strong> into the KB window.</li>
+      <li>Download and submit on the UPSC portal, which remains the final authority.</li>
+    </ol>
+    <p>Applying for other exams too? Try the <a href="/ssc-photo-and-signature-resizer/">SSC photo and signature resizer</a>, <a href="/ibps-photo-and-signature-resizer/">IBPS photo resizer</a>, <a href="/rrb-photo-and-signature-resizer/">RRB photo resizer</a>, or the <a href="/exam-photo-and-signature-resizer/">exam photo and signature resizer hub</a>.</p>
+  </div>
+</Base>
