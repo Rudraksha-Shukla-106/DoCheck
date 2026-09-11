@@ -1,0 +1,75 @@
+---
+// DOCHECK — reusable page atmosphere.
+// One fixed, decorative-only layer used across all pages.
+// Light = bright premium / Dark = deep premium, same motifs.
+// Parallax via [data-parallax] (transform-only, rAF in Base layout).
+// Complex artwork hides on mobile via CSS.
+---
+<div class="pa" aria-hidden="true">
+  <!-- Layer A: soft atmospheric gradient wash -->
+  <div class="pa-base" data-parallax="0.02"></div>
+
+  <!-- Layer B: large abstract forms (asymmetric, partially off-viewport) -->
+  <div class="pa-orb pa-orb--a" data-parallax="0.05"></div>
+  <div class="pa-orb pa-orb--b" data-parallax="0.08"></div>
+  <div class="pa-arc pa-arc--1" data-parallax="0.04"></div>
+  <div class="pa-arc pa-arc--2" data-parallax="0.06"></div>
+  <div class="pa-wave" data-parallax="0.03"></div>
+
+  <!-- Layer C: faint document-verification motifs (decorative only) -->
+  <svg class="pa-doc pa-doc--hero" data-parallax="0.03" viewBox="0 0 320 240" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <rect x="24" y="18" width="150" height="196" rx="8" opacity="0.14" />
+      <rect x="38" y="34" width="122" height="164" rx="5" opacity="0.09" />
+      <path d="M56 66h84M56 86h62M56 106h74M56 126h52" opacity="0.12" />
+      <rect x="56" y="148" width="40" height="26" rx="3" opacity="0.16" />
+      <path d="M104 156h52M104 168h40" opacity="0.11" />
+      <circle cx="204" cy="186" r="22" opacity="0.16" />
+      <path d="M194 186l7 7 13-14" opacity="0.22" />
+      <path d="M208 40v18M200 48l8 8 8-8" opacity="0.10" />
+    </g>
+  </svg>
+
+  <!-- Right-side premium composition: offset layered papers + one check -->
+  <svg class="pa-doc pa-doc--right" data-parallax="0.05" viewBox="0 0 360 480" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="60" y="48" width="196" height="280" rx="10" stroke-width="1.5" opacity="0.13" />
+      <rect x="82" y="70" width="196" height="280" rx="10" stroke-width="1.5" opacity="0.09" />
+      <rect x="104" y="92" width="196" height="280" rx="10" stroke-width="1.5" opacity="0.14" />
+      <rect x="128" y="118" width="48" height="60" rx="3" stroke-width="1.5" opacity="0.18" />
+      <path d="M188 128h84M188 144h64M188 160h74" stroke-width="1.5" opacity="0.13" />
+      <path d="M128 206h148M128 228h108M128 250h132M128 272h92M128 294h118" stroke-width="1.5" opacity="0.10" />
+      <path d="M128 322h60" stroke-width="1.5" stroke-dasharray="3 6" opacity="0.12" />
+      <g opacity="0.9">
+        <circle cx="238" cy="330" r="26" stroke-width="2" opacity="0.26" fill="var(--pa-check-fill)" stroke="none" />
+        <circle cx="238" cy="330" r="26" stroke-width="2" opacity="0.26" />
+        <path d="M226 330l9 9 17-18" stroke-width="2.2" opacity="0.32" />
+      </g>
+      <path d="M40 400h40M40 408h24" stroke-width="1.5" opacity="0.10" />
+      <circle cx="316" cy="60" r="3" stroke-width="1.5" opacity="0.14" />
+      <path d="M304 420h32M320 60v0" stroke-width="1" opacity="0" />
+    </g>
+  </svg>
+
+  <!-- Faint form-field lines, lower-left -->
+  <svg class="pa-doc pa-doc--forms" data-parallax="0.035" viewBox="0 0 400 140" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M16 28h220M16 58h160M16 88h196M16 118h120" opacity="0.08" />
+      <rect x="252" y="16" width="120" height="34" rx="6" opacity="0.07" />
+      <rect x="252" y="62" width="88" height="34" rx="6" opacity="0.06" />
+      <path d="M16 28h6M236 28h6M16 88h6" opacity="0.14" />
+    </g>
+  </svg>
+
+  <!-- Tiny verification pulse (subtle, slow) -->
+  <div class="pa-verify" data-parallax="0.07"><span></span></div>
+
+  <!-- Alignment ticks: small "+" marks -->
+  <svg class="pa-ticks" data-parallax="0.045" viewBox="0 0 120 300" focusable="false">
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.12">
+      <path d="M20 20h16M28 12v16" />
+      <path d="M84 120h14M91 113v14" />
+      <path d="M30 250h14M37 243v14" />
+    </g>
+  </svg>
+</div>
