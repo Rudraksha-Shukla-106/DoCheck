@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Contact Us | DocCheck" description="Contact DocCheck — report a changed exam requirement, a bug, or ask a question about the photo and signature resizer. We reply by email; please don't attach identity documents." canonical="https://doccheck.example/contact-us/">
+<Base title="Contact Us | DocCheck" description="Contact DocCheck — report a changed exam requirement, a bug, or ask a question about the photo and signature resizer. We reply by email; please don't attach identity documents." canonical="https://www.exampicfix.in/contact-us/">
   <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Contact Us</nav>
   <div class="prose">
     <h1>Contact Us</h1>
@@ -15,7 +15,7 @@ import Base from '../layouts/Base.astro';
     </ul>
 
     <h2>Send a message</h2>
-    <p class="fineprint">This form opens your email app with your message addressed to us — nothing is uploaded or stored by this site. Prefer your own app? Email us directly at <a href="mailto:support@doccheck.example">support@doccheck.example</a>.</p>
+    <p class="fineprint">This form opens your email app with your message addressed to us — nothing is uploaded or stored by this site. Prefer your own app? Email us directly at <a href="mailto:websitesupport@exampicfix.in">websitesupport@exampicfix.in</a>.</p>
     <form id="contactForm" class="contact-form" style="display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:var(--shadow-sm);">
       <label for="cName">Your name
         <input id="cName" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Sharma" required style="width:100%;padding:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:6px;font:inherit;" />
@@ -45,7 +45,7 @@ import Base from '../layouts/Base.astro';
 
     <h2>Other details</h2>
     <dl class="source-card" style="display:grid;">
-      <div><dt>Email</dt> <dd><a href="mailto:support@doccheck.example">support@doccheck.example</a></dd></div>
+      <div><dt>Email</dt> <dd><a href="mailto:websitesupport@exampicfix.in">websitesupport@exampicfix.in</a></dd></div>
       <div><dt>Response time</dt> <dd>2–3 working days in most cases</dd></div>
       <div><dt>Support hours</dt> <dd>Monday–Friday, 10:00–18:00 IST</dd></div>
     </dl>
@@ -61,7 +61,7 @@ import Base from '../layouts/Base.astro';
       const message = document.getElementById('cMsg').value.trim();
       const subject = encodeURIComponent(`[DocCheck] ${topic} — ${name}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`);
-      window.location.href = `mailto:support@doccheck.example?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:websitesupport@exampicfix.in?subject=${subject}&body=${body}`;
       note.textContent = '✓ Your email app should open now with the message pre-filled. Just press Send there.';
     });
   </script>

@@ -30,14 +30,14 @@ const pageSchema = [
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://doccheck.example/' },
-      { '@type': 'ListItem', position: 2, name: 'Requirements', item: 'https://doccheck.example/requirements/' },
-      { '@type': 'ListItem', position: 3, name: `${req.form_name} ${req.document_type}`, item: `https://doccheck.example/requirements/${req.slug}/` },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.exampicfix.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Requirements', item: 'https://www.exampicfix.in/requirements/' },
+      { '@type': 'ListItem', position: 3, name: `${req.form_name} ${req.document_type}`, item: `https://www.exampicfix.in/requirements/${req.slug}/` },
     ],
   },
 ];
 ---
-<Base title={pageTitle} description={pageDesc} canonical={`https://doccheck.example/requirements/${req.slug}/`} schema={pageSchema}>
+<Base title={pageTitle} description={pageDesc} canonical={`https://www.exampicfix.in/requirements/${req.slug}/`} schema={pageSchema}>
   <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / <a href="/requirements/">Requirements</a> / {req.form_name} {req.document_type}</nav>
   <h1>{req.form_name} — {req.document_type}: size, dimensions, format</h1>
   <p><span class={`badge ${req.status}`}>{badge}</span></p>

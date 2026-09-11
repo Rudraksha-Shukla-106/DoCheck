@@ -10,7 +10,7 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
 }
-const SITE = 'https://doccheck.example';
+const SITE = 'https://www.exampicfix.in';
 const {
   title,
   description = 'DocCheck is a free photo and signature resizer — check photo size and signature size, automatically fix, verify and download for SSC, UPSC, IBPS, RRB and passport uploads.',
@@ -28,6 +28,15 @@ const canonicalUrl = canonical ?? `${SITE}${Astro.url.pathname}`;
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6K5H7BECDJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6K5H7BECDJ');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>try{var t=localStorage.getItem('docheck-theme')||'system';var d=(t==='system')?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.dataset.theme=d;}catch(e){}</script>

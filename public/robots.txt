@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://doccheck.example/sitemap-index.xml
+Sitemap: https://www.exampicfix.in/sitemap-index.xml

@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://doccheck.example',
+  site: 'https://www.exampicfix.in',
   integrations: [
     sitemap({
       // Exclude error pages and the /privacy/ redirect alias
