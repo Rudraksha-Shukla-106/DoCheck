@@ -333,7 +333,7 @@ const categories = [
     <h2>Browse exam photo requirements</h2>
     <ul class="reflist">
       {requirements.map((r) => (
-        <li><a href={`/requirements/${r.slug}/`}><span>{r.form_name} — {r.document_type}</span><span class={`badge ${r.status}`}>{r.status === 'verified' ? 'verified' : r.status === 'known_discrepancy' ? 'see note' : 'needs recheck'}</span></a></li>
+        <li><a href={`/requirements/${r.slug}/`}>{r.form_name} — {r.document_type}</a></li>
       ))}
     </ul>
   </section>
