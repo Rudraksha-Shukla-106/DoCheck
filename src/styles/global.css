@@ -128,7 +128,8 @@ p { margin: 0.5em 0; }
 .hero { padding: 8px 0 4px; }
 .hero p.lede { font-size: 1.05rem; color: var(--ink); max-width: 38em; }
 .hero-cta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 12px 0 4px; }
-.hero-cta .btn-primary { width: auto; padding: 12px 26px; }
+.hero-cta .btn-primary { width: auto; padding: 12px 26px; border-radius: var(--r-sm); }
+.hero p.lede-secondary { font-size: 0.92rem; color: var(--muted); max-width: 38em; margin: 8px 0 0; }
 .trustline { font-size: 0.9rem; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
 
 /* ============ Buttons ============ */
@@ -146,6 +147,16 @@ button.choice:hover { border-color: var(--authority); }
 button.formbtn:hover { border-color: var(--authority); }
 .reflist a:focus-visible, .mainnav a:focus-visible, .nav-drop-btn:focus-visible, .nav-drop-panel a:focus-visible, .site-footer nav a:focus-visible { outline: 3px solid var(--authority); outline-offset: 2px; }
 .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+/* Outlined secondary button — same footprint as primary, lower visual weight */
+.btn-secondary {
+  background: transparent; color: var(--authority); border: 2px solid var(--authority);
+  padding: 10px 24px; font-weight: 700; cursor: pointer; width: 100%; min-height: 52px;
+  border-radius: var(--r-sm); text-decoration: none; text-align: center;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background var(--t-fast) var(--ease);
+}
+.btn-secondary:hover { background: var(--authority-bg); }
+.hero-cta .btn-secondary { width: auto; }
 .btn-ghost {
   background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink);
   padding: 12px 14px; font-weight: 600; cursor: pointer; width: 100%; min-height: 52px;
