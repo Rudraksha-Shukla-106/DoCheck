@@ -32,8 +32,8 @@ export default defineConfig({
           item.priority = 0.9;
           return item;
         }
-        // Passport resizer + requirements index
-        if (path === '/passport-photo-resizer/' || path === '/requirements/') {
+        // Passport resizer + custom image resizer + requirements index
+        if (path === '/passport-photo-resizer/' || path === '/resize-image-online/' || path === '/requirements/') {
           item.changefreq = path === '/requirements/' ? 'weekly' : 'monthly';
           item.priority = 0.8;
           return item;

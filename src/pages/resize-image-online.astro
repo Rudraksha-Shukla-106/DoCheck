@@ -1,0 +1,477 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Free Image Resizer Online — Resize to Any Size or KB, No Upload';
+const description =
+  'Free custom image resizer — resize by dimensions, percentage or target KB, and convert to JPG, PNG or WebP. 100% client-side, no upload, no sign-up.';
+const keywords =
+  'image resizer, resize image online, custom image resizer, resize image to KB, resize image by percentage, image compressor, convert image to jpg png webp, free image resizer no upload';
+const canonical = 'https://www.exampicfix.in/resize-image-online/';
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'DocCheck — Custom Image Resizer',
+    url: 'https://www.exampicfix.in/resize-image-online/',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web browser',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    featureList: 'Resize by dimensions, resize by percentage, compress to target KB, convert JPG PNG WebP',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.exampicfix.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Custom Image Resizer', item: 'https://www.exampicfix.in/resize-image-online/' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How do I resize an image to a specific size in KB?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Upload your image, choose the Target KB mode, enter the KB you want (for example 50), and click Resize. The tool compresses the image step by step until it fits, entirely in your browser.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I resize an image by percentage?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Upload your image, choose the Percentage mode, enter a value such as 50 for half size, and click Resize. The width and height scale together so nothing gets stretched.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is my image uploaded to a server?',
+        acceptedAnswer: { '@type': 'Answer', text: 'No. Resizing happens 100% in your browser — your image never leaves your device. Nothing is uploaded, stored, or deleted later, because there is nothing to delete.' },
+      },
+    ],
+  },
+];
+---
+<Base title={title} description={description} keywords={keywords} canonical={canonical} schema={schema}>
+  <nav aria-label="Breadcrumb" class="fineprint"><a href="/">Home</a> / Custom Image Resizer</nav>
+  <h1>Free Image Resizer Online</h1>
+  <p class="lede">Resize any image to your own size — by dimensions, by percentage, or to an exact KB — and convert between JPG, PNG and WebP.</p>
+  <p class="trustline">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:3px;"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+    Your image never leaves your device — resizing happens 100% in your browser. No upload, no sign-up, no limits.
+  </p>
+
+  <p class="stateline" id="appStatus">Starting… (if this never changes, JavaScript is blocked in your browser)</p>
+  <noscript>
+    <p class="verdict fail"><span class="v-title">❌ JavaScript is off</span><span class="v-sub">This resizer needs JavaScript turned on, because everything runs in your browser. Turn it on and reload.</span></p>
+  </noscript>
+
+  <ol class="steps">
+    <li class="step" id="step1">
+      <p class="step-title">Upload your image</p>
+      <p class="step-sub">JPG, PNG or WebP. Nothing is uploaded anywhere.</p>
+      <label class="dropzone" id="dropzone" for="file">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+        <span class="dz-title">Drop your image here, or choose from your device</span>
+        <span class="dz-sub">Works with camera photos and gallery images on mobile.</span>
+        <input id="file" type="file" accept="image/*" />
+      </label>
+      <div class="filecard" id="fileCard" hidden>
+        <img id="fileThumb" alt="" />
+        <div class="fmeta">
+          <div class="fname" id="fileName"></div>
+          <div class="num" id="fileMeta"></div>
+        </div>
+        <button type="button" class="linkbtn" id="removeFile">Remove</button>
+      </div>
+    </li>
+    <li class="step" id="step2">
+      <p class="step-title">Choose how to resize</p>
+      <div class="choices" role="group" aria-label="Resize mode" id="modeGroup">
+        <button type="button" class="choice active" data-mode="dimensions" aria-pressed="true">Dimensions<small>Width × height in px</small></button>
+        <button type="button" class="choice" data-mode="percentage" aria-pressed="false">Percentage<small>e.g. 50% smaller</small></button>
+        <button type="button" class="choice" data-mode="kb" aria-pressed="false">Target KB<small>Compress to fit</small></button>
+      </div>
+
+      <div id="pane-dimensions" style="margin-top:10px;">
+        <label for="inWidth">Width (px)</label>
+        <input id="inWidth" type="search" inputmode="numeric" placeholder="e.g. 800" autocomplete="off" />
+        <label for="inHeight">Height (px)</label>
+        <input id="inHeight" type="search" inputmode="numeric" placeholder="e.g. 600" autocomplete="off" />
+        <p class="hint"><label style="display:inline-flex;gap:8px;align-items:center;font-weight:400;"><input type="checkbox" id="keepRatio" checked style="width:auto;" /> Keep aspect ratio</label></p>
+      </div>
+
+      <div id="pane-percentage" style="margin-top:10px;" hidden>
+        <label for="inPercent">Resize to (percent)</label>
+        <input id="inPercent" type="search" inputmode="numeric" placeholder="e.g. 50" autocomplete="off" />
+        <p class="hint">50 = half size · 200 = double size. Width and height scale together.</p>
+      </div>
+
+      <div id="pane-kb" style="margin-top:10px;" hidden>
+        <label for="inKB">Target file size (KB)</label>
+        <input id="inKB" type="search" inputmode="numeric" placeholder="e.g. 100" autocomplete="off" />
+        <p class="hint">Keeps your current dimensions and compresses quality until it fits. PNG ignores quality — pick JPG or WebP for small KB targets.</p>
+      </div>
+
+      <label for="outFormat">Output format</label>
+      <input id="outFormat" type="search" value="" placeholder="Loading…" disabled list="formatOptions" autocomplete="off" />
+      <datalist id="formatOptions">
+        <option value="Keep original"></option>
+        <option value="JPG"></option>
+        <option value="PNG"></option>
+        <option value="WebP"></option>
+      </datalist>
+      <p class="hint">Pick JPG for smallest files, PNG for exact quality, WebP for a modern balance.</p>
+    </li>
+    <li class="step" id="step3">
+      <p class="step-title">Resize &amp; download</p>
+      <p class="hint" id="resultsEmpty">Your resized image will appear here after you upload a file.</p>
+      <span id="verdict" class="verdict" hidden aria-live="polite"></span>
+      <div class="report" id="ledger" hidden>
+        <div class="report-head" aria-hidden="true"><span>Result</span><span>Details</span><span>Status</span></div>
+        <div id="ledgerBody"></div>
+      </div>
+      <div class="fixbox" id="resizeBox">
+        <div class="btn-row sticky-action">
+          <button type="button" class="btn-primary" id="resizeBtn" disabled>Resize</button>
+        </div>
+      </div>
+      <div class="ba-grid" id="beforeAfter" hidden>
+        <figure class="ba-card">
+          <figcaption>Before</figcaption>
+          <img id="beforeImg" alt="Your uploaded image" />
+          <dl id="beforeMeta">
+            <dt>Size</dt><dd id="bSize">—</dd>
+            <dt>Dimensions</dt><dd id="bDims">—</dd>
+            <dt>Format</dt><dd id="bFormat">—</dd>
+          </dl>
+        </figure>
+        <div class="ba-arrow" aria-hidden="true">→</div>
+        <figure class="ba-card fixed">
+          <figcaption>Resized image</figcaption>
+          <img id="afterImg" alt="Resized image preview" />
+          <dl id="afterMeta">
+            <dt>Size</dt><dd id="aSize">—</dd>
+            <dt>Dimensions</dt><dd id="aDims">—</dd>
+            <dt>Format</dt><dd id="aFormat">—</dd>
+          </dl>
+        </figure>
+      </div>
+      <div class="btn-row" id="downloadRow" hidden>
+        <button type="button" class="btn-primary" id="downloadBtn" disabled>Download Image</button>
+        <button type="button" class="btn-ghost" id="resizeAnotherBtn">Resize Another Image</button>
+        <p class="hint" id="downloadNote"></p>
+      </div>
+    </li>
+  </ol>
+
+  <section class="prose" aria-label="About this image resizer">
+    <h2>What this image resizer does</h2>
+    <p>This page is a general-purpose <strong>image resizer</strong>: upload any JPG, PNG or WebP image, pick <strong>dimensions</strong>, <strong>percentage</strong> or a <strong>target KB size</strong>, optionally convert the format, and download the result. It uses the same in-browser resize engine as the exam checker — just with your own targets instead of a form's fixed requirements.</p>
+    <h2>Resizing for an exam or ID form instead?</h2>
+    <p>Use the <a href="/#check">photo and signature resizer</a>, which checks your file against sourced requirements for <a href="/ssc-photo-and-signature-resizer/">SSC</a>, <a href="/upsc-photo-and-signature-resizer/">UPSC</a>, <a href="/ibps-photo-and-signature-resizer/">IBPS</a>, <a href="/rrb-photo-and-signature-resizer/">RRB</a> and <a href="/passport-photo-resizer/">Passport</a> — with official sources and verification dates alongside every check.</p>
+  </section>
+
+  <script>
+    import { readFileProps, customResize } from '../lib/engine.ts';
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file');
+    const fileCard = document.getElementById('fileCard');
+    const fileThumb = document.getElementById('fileThumb');
+    const fileName = document.getElementById('fileName');
+    const fileMeta = document.getElementById('fileMeta');
+    const removeFile = document.getElementById('removeFile');
+    const verdict = document.getElementById('verdict');
+    const ledger = document.getElementById('ledger');
+    const ledgerBody = document.getElementById('ledgerBody');
+    const resultsEmpty = document.getElementById('resultsEmpty');
+    const resizeBtn = document.getElementById('resizeBtn');
+    const downloadRow = document.getElementById('downloadRow');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resizeAnotherBtn = document.getElementById('resizeAnotherBtn');
+    const downloadNote = document.getElementById('downloadNote');
+    const beforeAfter = document.getElementById('beforeAfter');
+    const beforeImg = document.getElementById('beforeImg');
+    const afterImg = document.getElementById('afterImg');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const inWidth = document.getElementById('inWidth');
+    const inHeight = document.getElementById('inHeight');
+    const keepRatio = document.getElementById('keepRatio');
+    const inPercent = document.getElementById('inPercent');
+    const inKB = document.getElementById('inKB');
+    const outFormat = document.getElementById('outFormat');
+
+    let mode = 'dimensions';
+    let currentFile = null;
+    let origProps = null;
+    let origFormat = 'JPEG';
+    let resultBlob = null;
+    let resultUrl = null;
+    let thumbUrl = null;
+    let beforeUrl = null;
+
+    document.getElementById('appStatus').textContent = '✓ Ready — upload an image to begin.';
+    outFormat.value = 'Keep original';
+    outFormat.disabled = false;
+    outFormat.placeholder = 'Keep original, JPG, PNG or WebP';
+
+    const panes = {
+      dimensions: document.getElementById('pane-dimensions'),
+      percentage: document.getElementById('pane-percentage'),
+      kb: document.getElementById('pane-kb'),
+    };
+    document.querySelectorAll('#modeGroup [data-mode]').forEach((b) => {
+      b.addEventListener('click', () => {
+        mode = b.dataset.mode;
+        document.querySelectorAll('#modeGroup [data-mode]').forEach((x) => {
+          const on = x === b;
+          x.classList.toggle('active', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        Object.entries(panes).forEach(([k, el]) => { el.hidden = k !== mode; });
+        updateSteps();
+      });
+    });
+
+    function extOf(name) {
+      return (name.split('.').pop() || '').toUpperCase();
+    }
+
+    function chosenFormat() {
+      const v = (outFormat.value || '').trim().toUpperCase();
+      if (v === 'JPG' || v === 'JPEG') return 'JPEG';
+      if (v === 'PNG') return 'PNG';
+      if (v === 'WEBP') return 'WEBP';
+      return origFormat;
+    }
+
+    function updateSteps() {
+      step1.classList.toggle('done', !!currentFile);
+      step2.classList.toggle('done', !!currentFile);
+      resizeBtn.disabled = !currentFile;
+    }
+
+    function showFileCard(f) {
+      if (thumbUrl) URL.revokeObjectURL(thumbUrl);
+      fileCard.hidden = false;
+      thumbUrl = URL.createObjectURL(f);
+      fileThumb.src = thumbUrl;
+      fileThumb.alt = `Preview of ${f.name}`;
+      fileName.textContent = f.name;
+      const dims = origProps ? `${origProps.width} × ${origProps.height} px` : '';
+      fileMeta.textContent = `${(f.size / 1024).toFixed(1)} KB · ${extOf(f.name)}${dims ? ` · ${dims}` : ''}`;
+    }
+
+    function paintVerdict(pass, title, sub) {
+      verdict.hidden = false;
+      verdict.className = 'verdict ' + (pass ? 'pass' : 'fail');
+      verdict.innerHTML = '';
+      const t = document.createElement('p');
+      t.className = 'v-title';
+      t.textContent = title;
+      const s = document.createElement('p');
+      s.className = 'v-sub';
+      s.textContent = sub;
+      verdict.append(t, s);
+    }
+
+    function paintRows(resultProps, targetKB) {
+      ledger.hidden = false;
+      resultsEmpty.hidden = true;
+      ledgerBody.innerHTML = '';
+      const rows = [
+        { label: 'DIMENSIONS', actual: `${resultProps.width} × ${resultProps.height} px`, pass: true },
+        { label: 'FILE SIZE', actual: `${(resultBlob.size / 1024).toFixed(1)} KB`, pass: true },
+        { label: 'FORMAT', actual: resultProps.format, pass: true },
+      ];
+      if (targetKB) {
+        const ok = resultBlob.size / 1024 <= targetKB * 1.02;
+        rows[1] = { label: 'FILE SIZE', actual: `${(resultBlob.size / 1024).toFixed(1)} KB (target ≤ ${targetKB} KB)`, pass: ok };
+      }
+      rows.forEach((r) => {
+        const kind = r.pass ? 'pass' : 'fail';
+        const row = document.createElement('div');
+        row.className = `report-row ${kind}`;
+        const vals = document.createElement('div');
+        vals.className = 'vals';
+        const prop = document.createElement('span');
+        prop.className = 'prop';
+        prop.textContent = r.label;
+        const actual = document.createElement('div');
+        actual.className = 'actual num';
+        actual.textContent = r.actual;
+        vals.append(prop, actual);
+        const pill = document.createElement('span');
+        pill.className = `pill ${kind}`;
+        pill.textContent = r.pass ? '✓ DONE' : '✗ MISSED';
+        row.append(vals, pill);
+        ledgerBody.appendChild(row);
+      });
+    }
+
+    async function handleFile() {
+      const f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      currentFile = f;
+      document.body.dataset.stage = 'file';
+      delete document.body.dataset.result;
+      verdict.hidden = true;
+      ledger.hidden = true;
+      downloadRow.hidden = true;
+      beforeAfter.hidden = true;
+      resultsEmpty.hidden = false;
+      downloadNote.textContent = '';
+      if (resultUrl) { URL.revokeObjectURL(resultUrl); resultUrl = null; }
+      resultBlob = null;
+      if (beforeUrl) URL.revokeObjectURL(beforeUrl);
+      beforeUrl = URL.createObjectURL(f);
+      beforeImg.src = beforeUrl;
+      try {
+        origProps = await readFileProps(f);
+      } catch (e) {
+        paintVerdict(false, '❌ Could not read that file', `${e.message} Upload a JPG, PNG or WebP image.`);
+        return;
+      }
+      const ext = extOf(f.name);
+      origFormat = ext === 'PNG' ? 'PNG' : ext === 'WEBP' ? 'WEBP' : 'JPEG';
+      document.getElementById('bSize').textContent = `${origProps.sizeKB.toFixed(1)} KB`;
+      document.getElementById('bDims').textContent = `${origProps.width} × ${origProps.height} px`;
+      document.getElementById('bFormat').textContent = origProps.format;
+      showFileCard(f);
+      updateSteps();
+    }
+
+    fileInput.addEventListener('change', handleFile);
+
+    ['dragover', 'dragenter'].forEach((evt) => dropzone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dz-active');
+    }));
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dz-active'));
+    dropzone.addEventListener('drop', (e) => {
+      dropzone.classList.remove('dz-active');
+      if (!e.dataTransfer || !e.dataTransfer.files.length) return;
+      e.preventDefault();
+      fileInput.files = e.dataTransfer.files;
+      handleFile();
+    });
+
+    removeFile.addEventListener('click', () => {
+      fileInput.value = '';
+      currentFile = null;
+      origProps = null;
+      if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = null; }
+      fileCard.hidden = true;
+      verdict.hidden = true;
+      ledger.hidden = true;
+      downloadRow.hidden = true;
+      beforeAfter.hidden = true;
+      resultsEmpty.hidden = false;
+      updateSteps();
+      fileInput.focus();
+    });
+
+    // Keep-ratio helper: editing one dimension auto-fills the other.
+    function ratioFill(changed) {
+      if (!keepRatio.checked || !origProps) return;
+      const ratio = origProps.width / origProps.height;
+      if (changed === inWidth && inWidth.value) {
+        inHeight.value = Math.max(1, Math.round(Number(inWidth.value) / ratio));
+      } else if (changed === inHeight && inHeight.value) {
+        inWidth.value = Math.max(1, Math.round(Number(inHeight.value) * ratio));
+      }
+    }
+    inWidth.addEventListener('input', () => ratioFill(inWidth));
+    inHeight.addEventListener('input', () => ratioFill(inHeight));
+
+    resizeBtn.addEventListener('click', async () => {
+      if (!currentFile) return;
+      const format = chosenFormat();
+      const num = (el) => {
+        const v = Number((el.value || '').trim());
+        return Number.isFinite(v) && v > 0 ? v : 0;
+      };
+      const opts = { mode, format, keepRatio: keepRatio.checked };
+      if (mode === 'dimensions') {
+        opts.width = num(inWidth);
+        opts.height = num(inHeight);
+        if (!opts.width && !opts.height) {
+          paintVerdict(false, '❌ Enter dimensions first', 'Type a width, a height, or both — for example 800 × 600 px.');
+          return;
+        }
+      } else if (mode === 'percentage') {
+        opts.percent = num(inPercent);
+        if (!(opts.percent > 0) || opts.percent > 400) {
+          paintVerdict(false, '❌ Enter a percentage first', 'Type a value between 1 and 400 — for example 50 for half size.');
+          return;
+        }
+      } else {
+        opts.targetKB = num(inKB);
+        if (!(opts.targetKB > 0)) {
+          paintVerdict(false, '❌ Enter a target KB first', 'Type the file size you want — for example 100 KB.');
+          return;
+        }
+      }
+      resizeBtn.disabled = true;
+      resizeBtn.textContent = 'Resizing…';
+      try {
+        resultBlob = await customResize(currentFile, opts, (url) => { afterImg.src = url; });
+        if (resultUrl) URL.revokeObjectURL(resultUrl);
+        resultUrl = URL.createObjectURL(resultBlob);
+        afterImg.src = resultUrl;
+        beforeAfter.hidden = false;
+        step3.classList.add('done');
+        const rp = await readFileProps(new File([resultBlob], 'resized', { type: resultBlob.type }));
+        document.getElementById('aSize').textContent = `${(resultBlob.size / 1024).toFixed(1)} KB`;
+        document.getElementById('aDims').textContent = `${rp.width} × ${rp.height} px`;
+        document.getElementById('aFormat').textContent = rp.format;
+        paintRows(rp, mode === 'kb' ? opts.targetKB : null);
+        const missed = mode === 'kb' && resultBlob.size / 1024 > opts.targetKB * 1.02;
+        if (missed) {
+          paintVerdict(false, '⚠ SLIGHTLY OVER TARGET', `Smallest quality still gives ${(resultBlob.size / 1024).toFixed(1)} KB — try JPG or WebP, or a smaller target dimension first.`);
+          document.body.dataset.result = 'fail';
+        } else {
+          paintVerdict(true, '✅ READY TO DOWNLOAD', `Resized image is ${(resultBlob.size / 1024).toFixed(1)} KB, ${rp.width} × ${rp.height} px, ${rp.format}.`);
+          document.body.dataset.result = 'pass';
+        }
+        document.body.dataset.stage = 'result';
+        downloadRow.hidden = false;
+        downloadBtn.disabled = false;
+        downloadNote.textContent = '';
+      } catch (e) {
+        paintVerdict(false, '❌ Resize failed', `${e.message} Try a different file.`);
+      } finally {
+        resizeBtn.disabled = false;
+        resizeBtn.textContent = 'Resize';
+      }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      if (!resultBlob) return;
+      const ext = chosenFormat() === 'PNG' ? 'png' : chosenFormat() === 'WEBP' ? 'webp' : 'jpg';
+      const a = document.createElement('a');
+      a.href = resultUrl;
+      a.download = `resized-image.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      downloadNote.textContent = '✓ Download started — check your downloads folder.';
+    });
+
+    resizeAnotherBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      currentFile = null;
+      origProps = null;
+      if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = null; }
+      fileCard.hidden = true;
+      verdict.hidden = true;
+      ledger.hidden = true;
+      downloadRow.hidden = true;
+      beforeAfter.hidden = true;
+      resultsEmpty.hidden = false;
+      delete document.body.dataset.result;
+      updateSteps();
+      fileInput.focus();
+    });
+  </script>
+</Base>

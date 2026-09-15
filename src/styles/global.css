@@ -112,6 +112,12 @@ button { font: inherit; border-radius: var(--r-sm); }
   transition: transform var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
 }
 .btn-primary:not(:disabled):active { transform: scale(0.98); }
+.btn-primary:not(:disabled):hover { filter: brightness(1.08); }
+.btn-primary:not(:disabled):focus-visible { outline: 3px solid var(--authority); outline-offset: 2px; }
+.btn-ghost:not(:disabled):hover { background: var(--surface-2); border-color: var(--authority); }
+button.choice:hover { border-color: var(--authority); }
+button.formbtn:hover { border-color: var(--authority); }
+.reflist a:focus-visible, .mainnav a:focus-visible, .site-footer nav a:focus-visible { outline: 3px solid var(--authority); outline-offset: 2px; }
 .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
 .btn-ghost {
   background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink);

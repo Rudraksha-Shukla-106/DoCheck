@@ -146,3 +146,108 @@ export async function fixImage(
   if (!blob) throw new Error('Could not process this image. Try a different file.');
   return blob;
 }
+
+export type CustomFormat = 'JPEG' | 'PNG' | 'WEBP';
+
+export interface CustomResizeOptions {
+  mode: 'dimensions' | 'percentage' | 'kb';
+  width?: number;
+  height?: number;
+  keepRatio?: boolean;
+  percent?: number;
+  targetKB?: number;
+  format: CustomFormat;
+}
+
+function customMime(format: CustomFormat): string {
+  if (format === 'PNG') return 'image/png';
+  if (format === 'WEBP') return 'image/webp';
+  return 'image/jpeg';
+}
+
+/**
+ * General-purpose resize/compress/convert — same client-side canvas +
+ * quality-stepdown pipeline as fixImage(), but driven by user-chosen
+ * targets instead of a form's pre-set requirement.
+ */
+export async function customResize(
+  file: File,
+  opts: CustomResizeOptions,
+  onPreview?: (url: string) => void,
+): Promise<Blob> {
+  const bitmap = await createImageBitmap(file);
+  let targetW = bitmap.width;
+  let targetH = bitmap.height;
+
+  if (opts.mode === 'dimensions') {
+    const w = Math.round(opts.width || 0);
+    const h = Math.round(opts.height || 0);
+    if (!w && !h) {
+      bitmap.close();
+      throw new Error('Enter a width, a height, or both.');
+    }
+    if (w > 0 && h > 0) {
+      if (opts.keepRatio) {
+        const s = Math.min(w / bitmap.width, h / bitmap.height);
+        targetW = Math.max(1, Math.round(bitmap.width * s));
+        targetH = Math.max(1, Math.round(bitmap.height * s));
+      } else {
+        targetW = w;
+        targetH = h;
+      }
+    } else if (w > 0) {
+      targetW = w;
+      targetH = Math.max(1, Math.round((bitmap.height * w) / bitmap.width));
+    } else {
+      targetH = h;
+      targetW = Math.max(1, Math.round((bitmap.width * h) / bitmap.height));
+    }
+  } else if (opts.mode === 'percentage') {
+    const p = opts.percent || 0;
+    if (!(p > 0) || p > 400) {
+      bitmap.close();
+      throw new Error('Enter a percentage between 1 and 400.');
+    }
+    targetW = Math.max(1, Math.round((bitmap.width * p) / 100));
+    targetH = Math.max(1, Math.round((bitmap.height * p) / 100));
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = targetW;
+  canvas.height = targetH;
+  const ctx = canvas.getContext('2d')!;
+  const mime = customMime(opts.format);
+  if (mime === 'image/jpeg') {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, targetW, targetH);
+  } else {
+    ctx.clearRect(0, 0, targetW, targetH);
+  }
+  ctx.drawImage(bitmap, 0, 0, targetW, targetH);
+  bitmap.close();
+
+  const maxBytes =
+    opts.mode === 'kb' && opts.targetKB && opts.targetKB > 0
+      ? opts.targetKB * 1024
+      : null;
+
+  // PNG has no quality knob: single encode, then report actual size.
+  if (mime === 'image/png') {
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, mime));
+    if (!blob) throw new Error('Could not process this image. Try a different file.');
+    onPreview?.(URL.createObjectURL(blob));
+    return blob;
+  }
+
+  let quality = 0.92;
+  let blob: Blob | null = null;
+  for (let i = 0; i < 8; i++) {
+    blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, mime, quality));
+    if (!blob) break;
+    onPreview?.(URL.createObjectURL(blob));
+    if (maxBytes == null || blob.size <= maxBytes || quality <= 0.3) break;
+    quality -= 0.09;
+  }
+  if (!blob) throw new Error('Could not process this image. Try a different file.');
+  return blob;
+}

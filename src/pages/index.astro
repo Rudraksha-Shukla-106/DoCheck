@@ -287,6 +287,17 @@ const categories = [
     </ol>
   </section>
 
+  <section aria-label="Browse exam photo requirements" data-reveal>
+    <h2>Browse exam photo requirements</h2>
+    <ul class="reflist">
+      {requirements.map((r) => (
+        <li><a href={`/requirements/${r.slug}/`}>{r.form_name} — {r.document_type}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <p class="fineprint" data-reveal>Need to resize an image for something else? Try our <a href="/resize-image-online/">free custom image resizer</a> →</p>
+
   <section class="prose" aria-label="About this photo and signature resizer" data-reveal>
     <h2>What this photo and signature resizer does</h2>
     <p>DocCheck is a <strong>photo and signature checker</strong> combined with an automatic fixing tool. You select the exact form you are applying for, upload your photo or signature, and the tool checks your file against that form's published requirements. When a problem is found, it identifies exactly which value failed — file size, dimensions, format or aspect ratio — and, where supported, fixes it automatically. The corrected file is then verified again against the same requirements before you download it.</p>
@@ -327,15 +338,6 @@ const categories = [
   <section class="prose" aria-label="Frequently asked questions" data-reveal>
     <h2>Photo and signature resizer — FAQs</h2>
     <Faq items={faqs} />
-  </section>
-
-  <section aria-label="Browse exam photo requirements" data-reveal>
-    <h2>Browse exam photo requirements</h2>
-    <ul class="reflist">
-      {requirements.map((r) => (
-        <li><a href={`/requirements/${r.slug}/`}>{r.form_name} — {r.document_type}</a></li>
-      ))}
-    </ul>
   </section>
 
   <script>
