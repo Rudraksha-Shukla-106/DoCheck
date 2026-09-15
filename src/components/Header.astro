@@ -10,6 +10,15 @@
       <a href="/#check">Check File</a>
       <a href="/requirements/">Requirements</a>
       <a href="/how-it-works/">How It Works</a>
+      <div class="nav-drop" id="toolsDrop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false" aria-controls="toolsMenu">Tools <span class="caret" aria-hidden="true">▾</span></button>
+        <div class="nav-drop-panel" id="toolsMenu" role="menu" aria-label="Tools">
+          <a href="/resize-image-online/" role="menuitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            <span class="td-text"><strong>Custom Image Resizer</strong><small>Resize by size, % or KB</small></span>
+          </a>
+        </div>
+      </div>
     </nav>
     <div class="theme-switch" role="group" aria-label="Color theme">
       <button type="button" data-theme-set="light" aria-pressed="false" title="Light theme" aria-label="Light theme">
@@ -45,4 +54,26 @@
     apply(current);
   }));
   media.addEventListener('change', () => { if (current === 'system') apply('system'); });
+  const drop = document.getElementById('toolsDrop');
+  const dropBtn = drop ? drop.querySelector('.nav-drop-btn') : null;
+  function setDrop(open) {
+    if (!drop || !dropBtn) return;
+    drop.classList.toggle('open', open);
+    dropBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  if (drop && dropBtn) {
+    dropBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setDrop(!drop.classList.contains('open'));
+    });
+    document.addEventListener('click', (e) => {
+      if (!drop.contains(e.target)) setDrop(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { setDrop(false); dropBtn.blur(); }
+    });
+    drop.addEventListener('focusout', (e) => {
+      if (!drop.contains(e.relatedTarget)) setDrop(false);
+    });
+  }
 </script>

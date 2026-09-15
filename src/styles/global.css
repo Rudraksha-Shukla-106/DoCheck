@@ -92,6 +92,33 @@ p { margin: 0.5em 0; }
 .mainnav { display: flex; gap: 4px; margin-left: auto; }
 .mainnav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.92rem; padding: 8px 10px; border-radius: var(--r-sm); }
 .mainnav a:hover { background: var(--surface-2); }
+/* Tools dropdown — trigger matches nav links, panel matches site tokens */
+.nav-drop { position: relative; display: flex; align-items: stretch; }
+.nav-drop-btn {
+  background: none; border: none; cursor: pointer; color: var(--ink);
+  font-weight: 600; font-size: 0.92rem; font-family: var(--sans);
+  padding: 8px 10px; border-radius: var(--r-sm);
+  display: flex; align-items: center; gap: 4px;
+}
+.nav-drop-btn:hover { background: var(--surface-2); }
+.nav-drop-btn .caret { font-size: 0.75rem; line-height: 1; }
+.nav-drop.open .nav-drop-btn { background: var(--surface-2); }
+.nav-drop-panel {
+  display: none; position: absolute; top: calc(100% + 6px); right: 0; min-width: 250px; z-index: 50;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-md); padding: 6px;
+}
+.nav-drop:hover .nav-drop-panel, .nav-drop:focus-within .nav-drop-panel, .nav-drop.open .nav-drop-panel { display: block; }
+.nav-drop-panel a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: var(--r-sm);
+  text-decoration: none; color: var(--ink);
+}
+.nav-drop-panel a:hover { background: var(--surface-2); }
+.nav-drop-panel a svg { color: var(--authority); flex: none; }
+.nav-drop-panel .td-text { display: grid; gap: 1px; }
+.nav-drop-panel .td-text strong { font-size: 0.92rem; font-weight: 700; }
+.nav-drop-panel .td-text small { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
 .env-badge {
   font-family: var(--mono); font-size: 0.72rem; color: var(--pass);
   border: 1.5px solid var(--pass); border-radius: 20px; padding: 2px 10px; white-space: nowrap;
@@ -117,7 +144,7 @@ button { font: inherit; border-radius: var(--r-sm); }
 .btn-ghost:not(:disabled):hover { background: var(--surface-2); border-color: var(--authority); }
 button.choice:hover { border-color: var(--authority); }
 button.formbtn:hover { border-color: var(--authority); }
-.reflist a:focus-visible, .mainnav a:focus-visible, .site-footer nav a:focus-visible { outline: 3px solid var(--authority); outline-offset: 2px; }
+.reflist a:focus-visible, .mainnav a:focus-visible, .nav-drop-btn:focus-visible, .nav-drop-panel a:focus-visible, .site-footer nav a:focus-visible { outline: 3px solid var(--authority); outline-offset: 2px; }
 .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
 .btn-ghost {
   background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink);
@@ -277,6 +304,17 @@ button.formbtn.active { border-color: var(--authority); background: var(--author
 .reflist a:hover { border-color: var(--authority); }
 .refgroup { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin: 18px 0 6px; }
 
+/* ============ Secondary tool link card (lighter than primary CTA) ============ */
+.tool-link-card {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 10px 14px; margin: 20px 0; text-decoration: none; color: var(--ink);
+  font-size: 0.92rem; box-shadow: var(--shadow-sm);
+}
+.tool-link-card svg { color: var(--authority); flex: none; }
+.tool-link-card .tl-arrow { margin-left: auto; color: var(--authority); font-weight: 700; flex: none; }
+.tool-link-card:hover { border-color: var(--authority); }
+
 /* ============ FAQ accordion (matches design system) ============ */
 .faq { display: grid; gap: 8px; margin-top: 10px; }
 .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); }
@@ -308,6 +346,8 @@ button.formbtn.active { border-color: var(--authority); background: var(--author
   .site-header .wrap { flex-wrap: wrap; row-gap: 6px; }
   .mainnav { order: 3; flex-basis: 100%; margin-left: 0; }
   .mainnav a { padding: 10px 8px; }
+  .nav-drop-btn { padding: 10px 8px; }
+  .nav-drop-panel { left: 0; right: auto; }
   .sticky-action { position: sticky; bottom: 0; background: var(--paper); padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); }
   body::before { background-size: 100% 150px, 76px 76px, 76px 76px; animation: none; }
   .ambient-doc { width: 300px; right: -200px; top: 40px; opacity: calc(var(--motif) - 0.22); }
